@@ -1,12 +1,174 @@
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.lang.reflect.Method;
 
 public class BattleshipTest {
 
+    private Player player;
+    private Player computer;
+
+
+
+    @BeforeEach
+    void setUp() {
+        player = new Player();
+        computer = new Player();// Ensure Player is properly initialized
+    }
+
     @Test
+    public void testSetupComputerAllShipsPlaced() throws Exception {
+        Method setupComputer = Battleship.class.getDeclaredMethod("setupComputer", Player.class);
+        setupComputer.setAccessible(true);  // Allow access to the private method
+
+        setupComputer.invoke(null, computer);  // Invoke the private static method
+
+        // Validate all ships are placed
+        for (Ship ship : computer.ships) {
+            assertTrue(ship.isLocationSet(), "Each ship should have a valid location.");
+            assertTrue(ship.isDirectionSet(), "Each ship should have a valid direction.");
+        }
+
+        assertEquals(0, computer.numOfShipsLeft(), "All ships should be placed.");
+    }
+
+    @Test
+    public void testNoOverlappingShips() throws Exception {
+        Method setupComputer = Battleship.class.getDeclaredMethod("setupComputer", Player.class);
+        setupComputer.setAccessible(true);
+
+        setupComputer.invoke(null, computer);
+
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                if (computer.playerGrid.hasShip(row, col)) {
+                    assertTrue(verifySingleOccupancy(row, col), "There should be no overlapping ships.");
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testShipsWithinBounds() throws Exception {
+        Method setupComputer = Battleship.class.getDeclaredMethod("setupComputer", Player.class);
+        setupComputer.setAccessible(true);
+
+        setupComputer.invoke(null, computer);
+
+        for (Ship ship : computer.ships) {
+            int startRow = ship.getRow();
+            int startCol = ship.getCol();
+            int length = ship.getLength();
+            int direction = ship.getDirection();
+
+            if (direction == Ship.HORIZONTAL) {
+                assertTrue(startCol + length <= 10, "Horizontal ship should fit within the grid.");
+            } else if (direction == Ship.VERTICAL) {
+                assertTrue(startRow + length <= 10, "Vertical ship should fit within the grid.");
+            }
+        }
+    }
+
+    private boolean verifySingleOccupancy(int row, int col) {
+        int count = 0;
+        for (Ship ship : computer.ships) {
+            if (ship.isLocationSet() && covers(ship, row, col)) {
+                count++;
+            }
+        }
+        return count <= 1;
+    }
+
+    private boolean covers(Ship ship, int row, int col) {
+        int startRow = ship.getRow();
+        int startCol = ship.getCol();
+        int length = ship.getLength();
+        int direction = ship.getDirection();
+
+        if (direction == Ship.HORIZONTAL) {
+            return row == startRow && col >= startCol && col < startCol + length;
+        } else if (direction == Ship.VERTICAL) {
+            return col == startCol && row >= startRow && row < startRow + length;
+        }
+        return false;
+    }
+
+
+    @Test
+    public void testPlayerShipsCorrectlyPlaced() {
+        // Simulate user input for 5 ships
+        String simulatedInput =
+                "A\n1\n0\n" +  // Ship 1: A1, horizontal
+                        "B\n2\n1\n" +  // Ship 2: B2, vertical
+                        "C\n3\n0\n" +  // Ship 3: C3, horizontal
+                        "D\n4\n1\n" +  // Ship 4: D4, vertical
+                        "E\n5\n0\n";   // Ship 5: E5, horizontal
+
+        InputStream originalIn = System.in;
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        try {
+            Battleship.reader = new Scanner(System.in);  // Reinitialize Scanner with simulated input
+
+            // Call the setup method
+            Battleship.setup(player);
+
+            // Validate that all ships have been placed
+            int numShipsPlaced = 0;
+            for (Ship ship : player.ships) {
+                assertTrue(ship.isLocationSet() && ship.isDirectionSet(),
+                        "Each ship must have a valid location and direction.");
+                numShipsPlaced++;
+            }
+
+            assertEquals(5, numShipsPlaced, "All 5 ships should be placed.");
+
+        } finally {
+            System.setIn(originalIn);  // Restore original System.in
+        }
+    }
+
+    @Test
+    public void testShipGridIntegrity() {
+        // Simulate user input for placing 5 ships
+        String simulatedInput =
+                "A\n1\n0\n" +  // Ship 1: A1, horizontal
+                        "B\n2\n1\n" +  // Ship 2: B2, vertical
+                        "C\n3\n0\n" +  // Ship 3: C3, horizontal
+                        "D\n4\n1\n" +  // Ship 4: D4, vertical
+                        "E\n5\n0\n";   // Ship 5: E5, horizontal
+
+        InputStream originalIn = System.in;
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        try {
+            Battleship.reader = new Scanner(System.in);  // Reinitialize Scanner for simulated input
+
+            // Call the setup method to simulate manual ship placement
+            Battleship.setup(player);
+
+            // Validate that no ship is out of grid bounds
+            for (Ship ship : player.ships) {
+                int row = ship.getRow();
+                int col = ship.getCol();
+                assertTrue(row >= 0 && row < 10, "Ship's row should be within grid bounds.");
+                assertTrue(col >= 0 && col < 10, "Ship's column should be within grid bounds.");
+            }
+
+        } finally {
+            System.setIn(originalIn);  // Restore original System.in
+        }
+    }
+
+
+
+
+
+        @Test
     public void testAskForGuess_Hit() {
         // Arrange
         Player userPlayer = new Player();
