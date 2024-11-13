@@ -1,24 +1,229 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 import java.lang.reflect.Method;
+import java.util.InputMismatchException;
+import java.lang.reflect.Field;
+import java.util.Random;
+
 
 public class BattleshipTest {
 
     private Player player;
     private Player computer;
+    private Player user;
+    private ByteArrayOutputStream outContent;
+    private final PrintStream originalOut = System.out;
+    private final InputStream originalIn = System.in;
 
+    // Test Randomizer for controlled computer moves
+    static class TestRandomizer extends Randomizer {
+        private static int[] values;
+        private static int index = 0;
 
+        public static void setNextValues(int... vals) {
+            values = vals;
+            index = 0;
+        }
+
+        public static int nextInt(int min, int max) {
+            if (values == null || index >= values.length) {
+                return min;
+            }
+            return values[index++];
+        }
+
+        public static void reset() {
+            values = null;
+            index = 0;
+        }
+    }
 
     @BeforeEach
     void setUp() {
         player = new Player();
-        computer = new Player();// Ensure Player is properly initialized
+        computer = new Player();
+        user = new Player();
+        outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        TestRandomizer.reset();
     }
+
+    @AfterEach
+    void restoreStreams() {
+        System.setOut(originalOut);
+        System.setIn(originalIn);
+    }
+
+    private void simulateUserInput(String input) {
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        Battleship.reader = new Scanner(System.in);
+    }
+
+    @Test
+    void testCompleteGameFlow() {
+        String input = String.join("\n",
+                // Ship placements (row, col, direction)
+                "A", "1", "0",
+                "B", "2", "0",
+                "C", "3", "0",
+                "D", "4", "0",
+                "E", "5", "0",
+                "",  // End player setup
+
+                // User guesses (row, col)
+                "A", "1",  // Correct guess
+                "Z", "1",  // Invalid row
+                "A", "2",  // Correct guess
+                "B", "2",  // Correct guess
+                "", "", "",  // Computer moves
+                "", "", ""   // Game continuation
+        );
+
+        simulateUserInput(input);
+
+        assertThrows(InputMismatchException.class, () -> {
+            Battleship.main(new String[]{});
+        }, "Expected InputMismatchException to be thrown.");
+
+        String output = outContent.toString();
+        assertTrue(output.contains("JAVA BATTLESHIP"), "Game title should appear");
+        assertTrue(output.contains("Player SETUP"), "Player setup should complete");
+        assertTrue(output.contains("Computer SETUP"), "Computer setup should complete");
+    }
+
+
+
+    @Test
+    void testShipPlacementPhase() {
+        String input = String.join("\n",
+                // Valid ship placements
+                "A", "1", "0",
+                "B", "2", "0",
+                "C", "3", "0",
+                "D", "4", "0",
+                "E", "5", "0",
+                "", "" // For computer setup
+        );
+
+        simulateUserInput(input);
+
+        Player testPlayer = new Player();
+        assertDoesNotThrow(() -> {
+            Battleship.setup(testPlayer);
+        });
+
+        assertEquals(0, testPlayer.numOfShipsLeft(), "All ships should be placed");
+    }
+
+    @Test
+    void testUserGuessPhase() {
+        Player userPlayer = new Player();
+        Player computer = new Player();
+        // Place a ship on computer's board for testing
+        computer.chooseShipLocation(computer.ships[0], 0, 0, 0);
+
+        String input = "A\n1\n";
+        simulateUserInput(input);
+
+        String result = Battleship.askForGuess(userPlayer, computer);
+        assertTrue(result.contains("HIT") || result.contains("MISS"));
+    }
+
+    @Test
+    void testComputerGuessPhase() {
+        Player computer = new Player();
+        Player userPlayer = new Player();
+        // Place a ship on user's board
+        userPlayer.chooseShipLocation(userPlayer.ships[0], 0, 0, 0);
+
+        // Simulate enter key presses for computer's turn
+        String input = "\n\n";
+        simulateUserInput(input);
+
+        assertDoesNotThrow(() -> {
+            Battleship.compMakeGuess(computer, userPlayer);
+        });
+    }
+
+    @Test
+    void testGameInitialization() {
+        String input = String.join("\n",
+                // Ship placements
+                "A", "1", "0",
+                "B", "2", "0",
+                "C", "3", "0",
+                "D", "4", "0",
+                "E", "5", "0",
+                "", "" // Computer setup newlines
+        );
+
+        simulateUserInput(input);
+
+        assertDoesNotThrow(() -> {
+            Player userPlayer = new Player();
+            Battleship.setup(userPlayer);
+            assertTrue(userPlayer.ships[0].isLocationSet(), "First ship should be placed");
+            assertTrue(userPlayer.ships[4].isLocationSet(), "Last ship should be placed");
+        });
+    }
+
+    @Test
+    void testGameEndConditions() {
+        Player testPlayer = new Player();
+        Player testComputer = new Player();
+
+        // Set up a nearly-won game state
+        for (int i = 0; i < Grid.NUM_ROWS - 1; i++) {
+            for (int j = 0; j < Grid.NUM_COLS - 1; j++) {
+                testPlayer.playerGrid.markHit(i, j);
+            }
+        }
+
+        assertTrue(testPlayer.playerGrid.hasLost(), "Game should end when all ships are hit");
+    }
+
+    @Test
+    public void testInvalidInputHandling() {
+        String input = String.join("\n",
+                "Z",      // Invalid row
+                "A",      // Correct row
+                "1",      // Correct column
+                "0",      // Direction
+                "B",      // Valid row
+                "11",     // Invalid column
+                "2",      // Correct column
+                "0",      // Direction
+                "C", "3", "0",
+                "D", "4", "0",
+                "E", "5", "0",
+                "", ""    // Computer setup continuation
+        );
+
+        simulateUserInput(input);
+
+        assertThrows(InputMismatchException.class, () -> {
+            Player userPlayer = new Player();
+            Battleship.setup(userPlayer);
+        }, "Expected InputMismatchException to be thrown.");
+    }
+
+
+
+
+
+
+
+
+
+
 
     @Test
     public void testSetupComputerAllShipsPlaced() throws Exception {
