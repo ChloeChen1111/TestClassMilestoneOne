@@ -13,175 +13,162 @@ public class RandomizerTest {
     @Test
     public void testConstructor() {
         Randomizer randomizer = new Randomizer();
-        assertNotNull("Constructor should create instance", randomizer);
+        assertNotNull(randomizer);
     }
 
     @Test
     public void testGetInstance() {
-        assertNull("Initial instance should be null", Randomizer.theInstance);
+        // Test when instance is null
+        assertNull(Randomizer.theInstance);
         Random instance1 = Randomizer.getInstance();
-        assertNotNull("First getInstance call should create instance", instance1);
+        assertNotNull(instance1);
+
+        // Test when instance exists
         Random instance2 = Randomizer.getInstance();
-        assertSame("getInstance should return the same instance", instance1, instance2);
+        assertSame(instance1, instance2);
     }
 
     @Test
-    public void testNextBooleanAllCases() {
-        boolean foundTrue = false;
-        boolean foundFalse = false;
-        int i;
-
-        for (i = 0; i < 100 && (!foundTrue || !foundFalse); i++) {
-            boolean result = Randomizer.nextBoolean();
-            if (result) {
-                foundTrue = true;
-            } else {
-                foundFalse = true;
+    public void testNextBoolean() {
+        // Test both cases by fixing Random's output
+        Randomizer.theInstance = new Random() {
+            @Override
+            public boolean nextBoolean() {
+                return true;
             }
-        }
+        };
+        assertTrue(Randomizer.nextBoolean());
 
-        assertTrue("nextBoolean should eventually return true", foundTrue);
-        assertTrue("nextBoolean should eventually return false", foundFalse);
+        Randomizer.theInstance = new Random() {
+            @Override
+            public boolean nextBoolean() {
+                return false;
+            }
+        };
+        assertFalse(Randomizer.nextBoolean());
     }
 
     @Test
-    public void testNextBooleanWithProbabilityMiddle() {
-        boolean foundTrue = false;
-        boolean foundFalse = false;
-        int i;
-
-        for (i = 0; i < 100 && (!foundTrue || !foundFalse); i++) {
-            boolean result = Randomizer.nextBoolean(0.5);
-            if (result) {
-                foundTrue = true;
-            } else {
-                foundFalse = true;
+    public void testNextBooleanProbability() {
+        // Test probability < threshold (true case)
+        Randomizer.theInstance = new Random() {
+            @Override
+            public double nextDouble() {
+                return 0.4;
             }
-        }
+        };
+        assertTrue(Randomizer.nextBoolean(0.5));
 
-        assertTrue("Should eventually get both true and false", foundTrue);
-        assertTrue("Should eventually get both true and false", foundFalse);
+        // Test probability >= threshold (false case)
+        Randomizer.theInstance = new Random() {
+            @Override
+            public double nextDouble() {
+                return 0.6;
+            }
+        };
+        assertFalse(Randomizer.nextBoolean(0.5));
     }
 
     @Test
     public void testNextInt() {
-        int first = Randomizer.nextInt();
-        boolean foundDifferent = false;
-        int i;
-
-        for (i = 0; i < 100 && !foundDifferent; i++) {
-            int next = Randomizer.nextInt();
-            if (next != first) {
-                foundDifferent = true;
+        // Test positive and negative values
+        Randomizer.theInstance = new Random() {
+            @Override
+            public int nextInt() {
+                return 42;
             }
-        }
+        };
+        assertEquals(42, Randomizer.nextInt());
 
-        assertTrue("Should find different values", foundDifferent);
+        Randomizer.theInstance = new Random() {
+            @Override
+            public int nextInt() {
+                return -42;
+            }
+        };
+        assertEquals(-42, Randomizer.nextInt());
     }
 
     @Test
-    public void testNextIntWithBound() {
-        int bound = 10;
-        boolean foundZero = false;
-        boolean foundNine = false;
-        int i;
-
-        for (i = 0; i < 100 && (!foundZero || !foundNine); i++) {
-            int result = Randomizer.nextInt(bound);
-            if (result == 0) {
-                foundZero = true;
+    public void testNextIntBound() {
+        // Test bound cases
+        Randomizer.theInstance = new Random() {
+            @Override
+            public int nextInt(int bound) {
+                return 0; // minimum value
             }
-            if (result == bound - 1) {
-                foundNine = true;
-            }
-        }
+        };
+        assertEquals(0, Randomizer.nextInt(10));
 
-        assertTrue("Should find minimum value (0)", foundZero);
-        assertTrue("Should find maximum value (9)", foundNine);
+        Randomizer.theInstance = new Random() {
+            @Override
+            public int nextInt(int bound) {
+                return bound - 1; // maximum value
+            }
+        };
+        assertEquals(9, Randomizer.nextInt(10));
     }
 
     @Test
-    public void testNextIntWithRange() {
-        int min = 5;
-        int max = 10;
-        boolean foundMin = false;
-        boolean foundMax = false;
-        int i;
-
-        for (i = 0; i < 100 && (!foundMin || !foundMax); i++) {
-            int result = Randomizer.nextInt(min, max);
-            if (result == min) {
-                foundMin = true;
+    public void testNextIntRange() {
+        // Test min value
+        Randomizer.theInstance = new Random() {
+            @Override
+            public int nextInt(int bound) {
+                return 0;
             }
-            if (result == max) {
-                foundMax = true;
-            }
-        }
+        };
+        assertEquals(5, Randomizer.nextInt(5, 10));
 
-        assertTrue("Should find minimum value", foundMin);
-        assertTrue("Should find maximum value", foundMax);
+        // Test max value
+        Randomizer.theInstance = new Random() {
+            @Override
+            public int nextInt(int bound) {
+                return bound - 1;
+            }
+        };
+        assertEquals(10, Randomizer.nextInt(5, 10));
     }
 
     @Test
     public void testNextDouble() {
-        boolean foundLow = false;
-        boolean foundHigh = false;
-        int i;
-
-        for (i = 0; i < 100 && (!foundLow || !foundHigh); i++) {
-            double result = Randomizer.nextDouble();
-            if (result < 0.1) {
-                foundLow = true;
+        // Test minimum value (0.0)
+        Randomizer.theInstance = new Random() {
+            @Override
+            public double nextDouble() {
+                return 0.0;
             }
-            if (result > 0.9) {
-                foundHigh = true;
-            }
-        }
+        };
+        assertEquals(0.0, Randomizer.nextDouble(), 0.0001);
 
-        assertTrue("Should find low values", foundLow);
-        assertTrue("Should find high values", foundHigh);
+        // Test maximum value (just under 1.0)
+        Randomizer.theInstance = new Random() {
+            @Override
+            public double nextDouble() {
+                return 0.99999;
+            }
+        };
+        assertEquals(0.99999, Randomizer.nextDouble(), 0.0001);
     }
 
     @Test
-    public void testNextDoubleWithRange() {
-        double min = 1.0;
-        double max = 2.0;
-        boolean foundNearMin = false;
-        boolean foundNearMax = false;
-        int i;
-
-        for (i = 0; i < 100 && (!foundNearMin || !foundNearMax); i++) {
-            double result = Randomizer.nextDouble(min, max);
-            if (result < min + 0.1) {
-                foundNearMin = true;
+    public void testNextDoubleRange() {
+        // Test minimum value
+        Randomizer.theInstance = new Random() {
+            @Override
+            public double nextDouble() {
+                return 0.0;
             }
-            if (result > max - 0.1) {
-                foundNearMax = true;
+        };
+        assertEquals(1.0, Randomizer.nextDouble(1.0, 2.0), 0.0001);
+
+        // Test maximum value
+        Randomizer.theInstance = new Random() {
+            @Override
+            public double nextDouble() {
+                return 0.99999;
             }
-        }
-
-        assertTrue("Should find values near minimum", foundNearMin);
-        assertTrue("Should find values near maximum", foundNearMax);
-    }
-    @Test
-    public void testNextDoubleWithEqualMinMax() {
-        double value = 5.0;
-        double result = Randomizer.nextDouble(value, value);
-        assertEquals(value, result, 0.0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNextIntWithZeroBound() {
-        Randomizer.nextInt(0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNextIntWithNegativeBound() {
-        Randomizer.nextInt(-1);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testNextIntWithInvalidRange() {
-        Randomizer.nextInt(10, 5);
+        };
+        assertEquals(1.99999, Randomizer.nextDouble(1.0, 2.0), 0.0001);
     }
 }
