@@ -1,0 +1,90 @@
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m╷[0m
+[36m├─[0m [36mJUnit Jupiter[0m [32m✔[0m
+[36m│  ├─[0m [36mLocationTest[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestCheckHit()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestIsUnguessed()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestSetHasShip()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestMarkHit()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestMarkMiss()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestCheckMiss()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestSetStatus()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestLocationConstructor()[0m [32m✔[0m
+[36m│  │  └─[0m [34mtestGetAndSetLengthOfShip()[0m [32m✔[0m
+[36m│  ├─[0m [36mShipTest[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestShip()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestSetLocation()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestToString()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestIsDirectionSet()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGetDirection()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestIsLocationSet()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGetLength()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGetCol()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGetRow()[0m [32m✔[0m
+[36m│  │  └─[0m [34mtestSetDirection()[0m [32m✔[0m
+[36m│  ├─[0m [36mBattleshipTest[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestShipsWithinBounds()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestComputerGuessPhase()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestShipGridIntegrity()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestInvalidInputHandling()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGameEndConditions()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestHasErrorsHorizontal()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestNoOverlappingShips()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestVerticalOverlap()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestAskForGuess_Hit()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestAskForGuess_Miss()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestConvertIntToLetter()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestConvertCompColToRegular()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestOverlapHorizontal()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestHasErrorsComp()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGameInitialization()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestHasErrorsVertical()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestPlayerShipsCorrectlyPlaced()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestOverlapHorizontalComp()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestShipPlacementPhase()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestConvertLetterToInt()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestSetupComputerAllShipsPlaced()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestCompleteGameFlow()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestConvertUserColToProCol()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestOverlapVertical()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestVerticalShipOutOfBounds()[0m [32m✔[0m
+[36m│  │  └─[0m [34mtestUserGuessPhase()[0m [32m✔[0m
+[36m│  └─[0m [36mPlayerTest[0m [32m✔[0m
+[36m│     ├─[0m [34mtestNumOfShipsLeft_ThrowsErrorInSetup()[0m [32m✔[0m
+[36m│     ├─[0m [34mtestAddShips()[0m [32m✔[0m
+[36m│     ├─[0m [34mtestNumOfShipsLeft_AllShipsSet()[0m [32m✔[0m
+[36m│     ├─[0m [34mtestNoShipsSet()[0m [32m✔[0m
+[36m│     └─[0m [34mtestNumOfShipsLeft_SomeShipsSet()[0m [32m✔[0m
+[36m└─[0m [36mJUnit Vintage[0m [32m✔[0m
+[36m   └─[0m [36mGridTest[0m [32m✔[0m
+[36m      ├─[0m [34mtestAddShip[0m [32m✔[0m
+[36m      ├─[0m [34mtestGet[0m [32m✔[0m
+[36m      ├─[0m [34mtestSwitchCounterToIntegerForArray[0m [32m✔[0m
+[36m      ├─[0m [34mtestGrid[0m [32m✔[0m
+[36m      ├─[0m [34mtestHasLost[0m [32m✔[0m
+[36m      ├─[0m [34mtestHasShip[0m [32m✔[0m
+[36m      ├─[0m [34mtestMarkHit[0m [32m✔[0m
+[36m      ├─[0m [34mtestAlreadyGuessed[0m [32m✔[0m
+[36m      ├─[0m [34mtestMarkMiss[0m [32m✔[0m
+[36m      ├─[0m [34mtestSetStatus[0m [32m✔[0m
+[36m      ├─[0m [34mtestGetStatus[0m [32m✔[0m
+[36m      ├─[0m [34mtestSetShip[0m [32m✔[0m
+[36m      ├─[0m [34mtestNumCols[0m [32m✔[0m
+[36m      └─[0m [34mtestNumRows[0m [32m✔[0m
+
+Test run finished after 320 ms
+[         7 containers found      ]
+[         0 containers skipped    ]
+[         7 containers started    ]
+[         0 containers aborted    ]
+[         7 containers successful ]
+[         0 containers failed     ]
+[        64 tests found           ]
+[         0 tests skipped         ]
+[        64 tests started         ]
+[         0 tests aborted         ]
+[        64 tests successful      ]
+[         0 tests failed          ]
+

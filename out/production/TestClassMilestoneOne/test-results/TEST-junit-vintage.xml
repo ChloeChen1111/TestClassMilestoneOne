@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JUnit Vintage" tests="14" skipped="0" failures="0" errors="0" time="0.008" hostname="Rahul-4.local" timestamp="2024-11-15T15:27:12">
+<properties>
+<property name="apple.awt.application.name" value="ConsoleLauncher"/>
+<property name="file.encoding" value="UTF-8"/>
+<property name="file.separator" value="/"/>
+<property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+<property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+<property name="java.class.path" value="build:lib/junit-jupiter-engine-5.8.2.jar:lib/byte-buddy.jar:lib/junit-platform-commons-1.8.2.jar:lib/junit-4.13.2.jar:lib/junit-platform-engine-1.8.2.jar:lib/byte-buddy-agent.jar:lib/hamcrest-core-1.3.jar:lib/byte-buddy-1.11.13.jar:lib/apiguardian-api-1.1.2.jar:lib/junit-platform-console-standalone.jar:lib/mockito-core-3.12.4.jar:lib/mockito-core.jar:lib/objenesis.jar:lib/junit-jupiter-api-5.8.2.jar:lib/opentest4j-1.2.0.jar"/>
+<property name="java.class.version" value="67.0"/>
+<property name="java.home" value="/Users/rahulchowdary/Library/Java/JavaVirtualMachines/openjdk-23.0.1/Contents/Home"/>
+<property name="java.io.tmpdir" value="/var/folders/3s/9lxhhmv129l40rsx40t11kd00000gn/T/"/>
+<property name="java.library.path" value="/Users/rahulchowdary/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+<property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+<property name="java.runtime.version" value="23.0.1+11-39"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="23"/>
+<property name="java.vendor" value="Oracle Corporation"/>
+<property name="java.vendor.url" value="https://java.oracle.com/"/>
+<property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+<property name="java.version" value="23.0.1"/>
+<property name="java.version.date" value="2024-10-15"/>
+<property name="java.vm.compressedOopsMode" value="Zero based"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="23"/>
+<property name="java.vm.vendor" value="Oracle Corporation"/>
+<property name="java.vm.version" value="23.0.1+11-39"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="native.encoding" value="UTF-8"/>
+<property name="os.arch" value="aarch64"/>
+<property name="os.name" value="Mac OS X"/>
+<property name="os.version" value="15.1"/>
+<property name="path.separator" value=":"/>
+<property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+<property name="stderr.encoding" value="UTF-8"/>
+<property name="stdout.encoding" value="UTF-8"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="/Users/rahulchowdary/Library/Java/JavaVirtualMachines/openjdk-23.0.1/Contents/Home/lib"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+<property name="sun.java.command" value="org.junit.platform.console.ConsoleLauncher --scan-class-path --class-path build --details=tree --reports-dir=test-results"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="UTF-8"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="user.country" value="US"/>
+<property name="user.dir" value="/Users/rahulchowdary/java/Java-Battleship-master"/>
+<property name="user.home" value="/Users/rahulchowdary"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="rahulchowdary"/>
+<property name="user.timezone" value="America/Los_Angeles"/>
+</properties>
+<testcase name="testGet" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testGet(GridTest)]
+display-name: testGet
+]]></system-out>
+</testcase>
+<testcase name="testNumRows" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testNumRows(GridTest)]
+display-name: testNumRows
+]]></system-out>
+</testcase>
+<testcase name="testMarkHit" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testMarkHit(GridTest)]
+display-name: testMarkHit
+]]></system-out>
+</testcase>
+<testcase name="testHasLost" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testHasLost(GridTest)]
+display-name: testHasLost
+]]></system-out>
+</testcase>
+<testcase name="testHasShip" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testHasShip(GridTest)]
+display-name: testHasShip
+]]></system-out>
+</testcase>
+<testcase name="testGetStatus" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testGetStatus(GridTest)]
+display-name: testGetStatus
+]]></system-out>
+</testcase>
+<testcase name="testSetStatus" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testSetStatus(GridTest)]
+display-name: testSetStatus
+]]></system-out>
+</testcase>
+<testcase name="testMarkMiss" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testMarkMiss(GridTest)]
+display-name: testMarkMiss
+]]></system-out>
+</testcase>
+<testcase name="testGrid" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testGrid(GridTest)]
+display-name: testGrid
+]]></system-out>
+</testcase>
+<testcase name="testAddShip" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testAddShip(GridTest)]
+display-name: testAddShip
+]]></system-out>
+</testcase>
+<testcase name="testSetShip" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testSetShip(GridTest)]
+display-name: testSetShip
+]]></system-out>
+</testcase>
+<testcase name="testSwitchCounterToIntegerForArray" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testSwitchCounterToIntegerForArray(GridTest)]
+display-name: testSwitchCounterToIntegerForArray
+]]></system-out>
+</testcase>
+<testcase name="testAlreadyGuessed" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testAlreadyGuessed(GridTest)]
+display-name: testAlreadyGuessed
+]]></system-out>
+</testcase>
+<testcase name="testNumCols" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]/[runner:GridTest]/[test:testNumCols(GridTest)]
+display-name: testNumCols
+]]></system-out>
+</testcase>
+<system-out><![CDATA[
+unique-id: [engine:junit-vintage]
+display-name: JUnit Vintage
+]]></system-out>
+</testsuite>
