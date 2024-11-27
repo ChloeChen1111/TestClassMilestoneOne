@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="JUnit Jupiter" tests="50" skipped="0" failures="0" errors="0" time="0.268" hostname="Rahul-4.local" timestamp="2024-11-15T15:27:12">
+<testsuite name="JUnit Jupiter" tests="64" skipped="0" failures="0" errors="0" time="0.26" hostname="Rahul-4.local" timestamp="2024-11-19T20:59:40">
 <properties>
 <property name="apple.awt.application.name" value="ConsoleLauncher"/>
 <property name="file.encoding" value="UTF-8"/>
 <property name="file.separator" value="/"/>
 <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
 <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
-<property name="java.class.path" value="build:lib/junit-jupiter-engine-5.8.2.jar:lib/byte-buddy.jar:lib/junit-platform-commons-1.8.2.jar:lib/junit-4.13.2.jar:lib/junit-platform-engine-1.8.2.jar:lib/byte-buddy-agent.jar:lib/hamcrest-core-1.3.jar:lib/byte-buddy-1.11.13.jar:lib/apiguardian-api-1.1.2.jar:lib/junit-platform-console-standalone.jar:lib/mockito-core-3.12.4.jar:lib/mockito-core.jar:lib/objenesis.jar:lib/junit-jupiter-api-5.8.2.jar:lib/opentest4j-1.2.0.jar"/>
+<property name="java.class.path" value="build:lib/byte-buddy.jar:lib/byte-buddy-agent.jar:lib/junit-platform-console-standalone.jar:lib/mockito-core.jar:lib/objenesis.jar"/>
 <property name="java.class.version" value="67.0"/>
 <property name="java.home" value="/Users/rahulchowdary/Library/Java/JavaVirtualMachines/openjdk-23.0.1/Contents/Home"/>
 <property name="java.io.tmpdir" value="/var/folders/3s/9lxhhmv129l40rsx40t11kd00000gn/T/"/>
@@ -61,6 +61,18 @@ unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testGameInitial
 display-name: testGameInitialization()
 ]]></system-out>
 </testcase>
+<testcase name="testGrid()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testGrid()]
+display-name: testGrid()
+]]></system-out>
+</testcase>
+<testcase name="testGet()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testGet()]
+display-name: testGet()
+]]></system-out>
+</testcase>
 <testcase name="testComputerGuessPhase()" classname="BattleshipTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testComputerGuessPhase()]
@@ -71,6 +83,12 @@ display-name: testComputerGuessPhase()
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testVerticalShipOutOfBounds()]
 display-name: testVerticalShipOutOfBounds()
+]]></system-out>
+</testcase>
+<testcase name="testSetStatus()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testSetStatus()]
+display-name: testSetStatus()
 ]]></system-out>
 </testcase>
 <testcase name="testIsUnguessed()" classname="LocationTest" time="0">
@@ -97,6 +115,12 @@ unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testShipPlaceme
 display-name: testShipPlacementPhase()
 ]]></system-out>
 </testcase>
+<testcase name="testHasShip()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testHasShip()]
+display-name: testHasShip()
+]]></system-out>
+</testcase>
 <testcase name="testCheckMiss()" classname="LocationTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:LocationTest]/[method:testCheckMiss()]
@@ -121,10 +145,28 @@ unique-id: [engine:junit-jupiter]/[class:ShipTest]/[method:testGetDirection()]
 display-name: testGetDirection()
 ]]></system-out>
 </testcase>
-<testcase name="testShipGridIntegrity()" classname="BattleshipTest" time="0.004">
+<testcase name="testShipGridIntegrity()" classname="BattleshipTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testShipGridIntegrity()]
 display-name: testShipGridIntegrity()
+]]></system-out>
+</testcase>
+<testcase name="testswitchCounterToIntegerForArray()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testswitchCounterToIntegerForArray()]
+display-name: testswitchCounterToIntegerForArray()
+]]></system-out>
+</testcase>
+<testcase name="testHasLost()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testHasLost()]
+display-name: testHasLost()
+]]></system-out>
+</testcase>
+<testcase name="testAlreadyGuessed()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testAlreadyGuessed()]
+display-name: testAlreadyGuessed()
 ]]></system-out>
 </testcase>
 <testcase name="testPlayerShipsCorrectlyPlaced()" classname="BattleshipTest" time="0.001">
@@ -199,13 +241,19 @@ unique-id: [engine:junit-jupiter]/[class:ShipTest]/[method:testGetLength()]
 display-name: testGetLength()
 ]]></system-out>
 </testcase>
+<testcase name="testNumCol()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testNumCol()]
+display-name: testNumCol()
+]]></system-out>
+</testcase>
 <testcase name="testVerticalOverlap()" classname="BattleshipTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testVerticalOverlap()]
 display-name: testVerticalOverlap()
 ]]></system-out>
 </testcase>
-<testcase name="testNumOfShipsLeft_ThrowsErrorInSetup()" classname="PlayerTest" time="0.002">
+<testcase name="testNumOfShipsLeft_ThrowsErrorInSetup()" classname="PlayerTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:PlayerTest]/[method:testNumOfShipsLeft_ThrowsErrorInSetup()]
 display-name: testNumOfShipsLeft_ThrowsErrorInSetup()
@@ -229,6 +277,18 @@ unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testNoOverlappi
 display-name: testNoOverlappingShips()
 ]]></system-out>
 </testcase>
+<testcase name="testMarkMiss()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testMarkMiss()]
+display-name: testMarkMiss()
+]]></system-out>
+</testcase>
+<testcase name="testGetStatus()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testGetStatus()]
+display-name: testGetStatus()
+]]></system-out>
+</testcase>
 <testcase name="testCompleteGameFlow()" classname="BattleshipTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testCompleteGameFlow()]
@@ -247,10 +307,16 @@ unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testOverlapVert
 display-name: testOverlapVertical()
 ]]></system-out>
 </testcase>
-<testcase name="testToString()" classname="ShipTest" time="0.004">
+<testcase name="testToString()" classname="ShipTest" time="0.005">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:ShipTest]/[method:testToString()]
 display-name: testToString()
+]]></system-out>
+</testcase>
+<testcase name="testNumRows()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testNumRows()]
+display-name: testNumRows()
 ]]></system-out>
 </testcase>
 <testcase name="testConvertLetterToInt()" classname="BattleshipTest" time="0">
@@ -265,7 +331,7 @@ unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testHasErrorsVe
 display-name: testHasErrorsVertical()
 ]]></system-out>
 </testcase>
-<testcase name="testCheckHit()" classname="LocationTest" time="0.01">
+<testcase name="testCheckHit()" classname="LocationTest" time="0.007">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:LocationTest]/[method:testCheckHit()]
 display-name: testCheckHit()
@@ -295,10 +361,22 @@ unique-id: [engine:junit-jupiter]/[class:PlayerTest]/[method:testNumOfShipsLeft_
 display-name: testNumOfShipsLeft_AllShipsSet()
 ]]></system-out>
 </testcase>
+<testcase name="testAddShip()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testAddShip()]
+display-name: testAddShip()
+]]></system-out>
+</testcase>
 <testcase name="testMarkMiss()" classname="LocationTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:LocationTest]/[method:testMarkMiss()]
 display-name: testMarkMiss()
+]]></system-out>
+</testcase>
+<testcase name="testMarkHit()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testMarkHit()]
+display-name: testMarkHit()
 ]]></system-out>
 </testcase>
 <testcase name="testShipsWithinBounds()" classname="BattleshipTest" time="0.005">
@@ -347,6 +425,12 @@ display-name: testGetRow()
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:BattleshipTest]/[method:testConvertIntToLetter()]
 display-name: testConvertIntToLetter()
+]]></system-out>
+</testcase>
+<testcase name="testSetShip()" classname="GridTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:GridTest]/[method:testSetShip()]
+display-name: testSetShip()
 ]]></system-out>
 </testcase>
 <testcase name="testSetDirection()" classname="ShipTest" time="0">

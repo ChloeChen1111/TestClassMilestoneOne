@@ -24,6 +24,21 @@ Thanks for using JUnit! Support its development at https://junit.org/sponsoring
 [36m│  │  ├─[0m [34mtestGetCol()[0m [32m✔[0m
 [36m│  │  ├─[0m [34mtestGetRow()[0m [32m✔[0m
 [36m│  │  └─[0m [34mtestSetDirection()[0m [32m✔[0m
+[36m│  ├─[0m [36mGridTest[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestAddShip()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGet()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGrid()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestswitchCounterToIntegerForArray()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestHasLost()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestHasShip()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestMarkHit()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestAlreadyGuessed()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestMarkMiss()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestSetStatus()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestGetStatus()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestNumCol()[0m [32m✔[0m
+[36m│  │  ├─[0m [34mtestSetShip()[0m [32m✔[0m
+[36m│  │  └─[0m [34mtestNumRows()[0m [32m✔[0m
 [36m│  ├─[0m [36mBattleshipTest[0m [32m✔[0m
 [36m│  │  ├─[0m [34mtestShipsWithinBounds()[0m [32m✔[0m
 [36m│  │  ├─[0m [34mtestComputerGuessPhase()[0m [32m✔[0m
@@ -58,23 +73,8 @@ Thanks for using JUnit! Support its development at https://junit.org/sponsoring
 [36m│     ├─[0m [34mtestNoShipsSet()[0m [32m✔[0m
 [36m│     └─[0m [34mtestNumOfShipsLeft_SomeShipsSet()[0m [32m✔[0m
 [36m└─[0m [36mJUnit Vintage[0m [32m✔[0m
-[36m   └─[0m [36mGridTest[0m [32m✔[0m
-[36m      ├─[0m [34mtestAddShip[0m [32m✔[0m
-[36m      ├─[0m [34mtestGet[0m [32m✔[0m
-[36m      ├─[0m [34mtestSwitchCounterToIntegerForArray[0m [32m✔[0m
-[36m      ├─[0m [34mtestGrid[0m [32m✔[0m
-[36m      ├─[0m [34mtestHasLost[0m [32m✔[0m
-[36m      ├─[0m [34mtestHasShip[0m [32m✔[0m
-[36m      ├─[0m [34mtestMarkHit[0m [32m✔[0m
-[36m      ├─[0m [34mtestAlreadyGuessed[0m [32m✔[0m
-[36m      ├─[0m [34mtestMarkMiss[0m [32m✔[0m
-[36m      ├─[0m [34mtestSetStatus[0m [32m✔[0m
-[36m      ├─[0m [34mtestGetStatus[0m [32m✔[0m
-[36m      ├─[0m [34mtestSetShip[0m [32m✔[0m
-[36m      ├─[0m [34mtestNumCols[0m [32m✔[0m
-[36m      └─[0m [34mtestNumRows[0m [32m✔[0m
 
-Test run finished after 320 ms
+Test run finished after 311 ms
 [         7 containers found      ]
 [         0 containers skipped    ]
 [         7 containers started    ]

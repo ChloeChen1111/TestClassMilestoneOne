@@ -28,18 +28,6 @@ public class BattleshipTest {
         private static int[] values;
         private static int index = 0;
 
-        public static void setNextValues(int... vals) {
-            values = vals;
-            index = 0;
-        }
-
-        public static int nextInt(int min, int max) {
-            if (values == null || index >= values.length) {
-                return min;
-            }
-            return values[index++];
-        }
-
         public static void reset() {
             values = null;
             index = 0;
@@ -215,6 +203,192 @@ public class BattleshipTest {
         }, "Expected InputMismatchException to be thrown.");
     }
 
+
+
+
+    @Test
+    void testCompMakeGuessHit() {
+        // Arrange
+        Player computer = new Player();
+        Player user = new Player();
+        // Place a ship at a known location
+        user.playerGrid.setShip(0, 0, true);
+
+        // Create a custom Randomizer class for testing
+        class TestRandom extends Random {
+            private int callCount = 0;
+
+            @Override
+            public int nextInt(int bound) {
+                return 0; // Always return 0 to hit position (0,0)
+            }
+        }
+
+        // Set the test randomizer
+        Randomizer.theInstance = new TestRandom();
+
+        // Redirect System.out to capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Simulate user pressing enter
+        ByteArrayInputStream in = new ByteArrayInputStream("\n\n".getBytes());
+        System.setIn(in);
+        Battleship.reader = new Scanner(System.in);
+
+        try {
+            // Act
+            Battleship.compMakeGuess(computer, user);
+
+            // Assert
+            assertTrue(outContent.toString().contains("COMP HIT AT A1"),
+                    "Expected hit message at A1");
+        } finally {
+            // Cleanup
+            System.setOut(originalOut);
+            System.setIn(System.in);
+        }
+    }
+
+    @Test
+    void testCompMakeGuessMiss() {
+        // Arrange
+        Player computer = new Player();
+        Player user = new Player();
+        // Ensure no ship at target location (1,1)
+
+        // Create a custom Randomizer class for testing
+        class TestRandom extends Random {
+            private int callCount = 0;
+
+            @Override
+            public int nextInt(int bound) {
+                return 1; // Always return 1 to target position (1,1)
+            }
+        }
+
+        // Set the test randomizer
+        Randomizer.theInstance = new TestRandom();
+
+        // Redirect System.out to capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Simulate user pressing enter
+        ByteArrayInputStream in = new ByteArrayInputStream("\n\n".getBytes());
+        System.setIn(in);
+        Battleship.reader = new Scanner(System.in);
+
+        try {
+            // Act
+            Battleship.compMakeGuess(computer, user);
+
+            // Assert
+            assertTrue(outContent.toString().contains("COMP MISS AT B2"),
+                    "Expected miss message at B2");
+        } finally {
+            // Cleanup
+            System.setOut(originalOut);
+            System.setIn(System.in);
+        }
+    }
+
+    @Test
+    void testCompMakeGuessEdgeCoordinates() {
+        // Arrange
+        Player computer = new Player();
+        Player user = new Player();
+
+        // Create a custom Randomizer class for testing
+        class TestRandom extends Random {
+            @Override
+            public int nextInt(int bound) {
+                return 9; // Always return 9 to hit edge coordinates
+            }
+        }
+
+        // Set the test randomizer
+        Randomizer.theInstance = new TestRandom();
+
+        // Redirect System.out to capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Simulate user pressing enter
+        ByteArrayInputStream in = new ByteArrayInputStream("\n\n".getBytes());
+        System.setIn(in);
+        Battleship.reader = new Scanner(System.in);
+
+        try {
+            // Act
+            Battleship.compMakeGuess(computer, user);
+
+            // Assert
+            String output = outContent.toString();
+            assertTrue(output.contains("COMP MISS AT J10"),
+                    "Expected miss message at edge coordinates J10");
+        } finally {
+            // Cleanup
+            System.setOut(originalOut);
+            System.setIn(System.in);
+        }
+    }
+
+    @Test
+    void testCompMakeGuessAvoidRepeatGuess() {
+        // Arrange
+        Player computer = new Player();
+        Player user = new Player();
+
+        // Mark position (0,0) as already guessed
+        computer.oppGrid.markHit(0, 0);
+
+        // Create a custom Randomizer class for testing
+        class TestRandom extends Random {
+            private int callCount = 0;
+
+            @Override
+            public int nextInt(int bound) {
+                // First return 0,0 (already guessed) then 1,1
+                return callCount++ < 2 ? 0 : 1;
+            }
+        }
+
+        // Set the test randomizer
+        Randomizer.theInstance = new TestRandom();
+
+        // Redirect System.out to capture output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Simulate user pressing enter
+        ByteArrayInputStream in = new ByteArrayInputStream("\n\n".getBytes());
+        System.setIn(in);
+        Battleship.reader = new Scanner(System.in);
+
+        try {
+            // Act
+            Battleship.compMakeGuess(computer, user);
+
+            // Assert
+            assertTrue(outContent.toString().contains("AT B2"),
+                    "Should make guess at B2 after avoiding A1");
+        } finally {
+            // Cleanup
+            System.setOut(originalOut);
+            System.setIn(System.in);
+        }
+    }
+
+    @AfterEach
+    void cleanup() {
+        // Reset the Randomizer instance after each test
+        Randomizer.theInstance = null;
+    }
 
 
 
