@@ -20,11 +20,14 @@ class GridTest {
 
 	@BeforeAll
 	public static void setUp() {
+
 		// Initialize the Grid object
 		grid = new Grid();
+
 		// Initialize player and computer
 		player = new Player();
 		computer = new Player();
+
 
 		// Redirect System.out to capture print output
 		outputStream = new ByteArrayOutputStream();
@@ -75,6 +78,7 @@ class GridTest {
 
 		// Assert: Verify the hit is displayed
 		assertTrue(output.contains("X"), "The guessed location should be marked as a hit (X).");
+
 	}
 
 	@Test
@@ -88,6 +92,24 @@ class GridTest {
 
 		// Assert: Verify the grid displays '-' for unguessed cells
 		assertTrue(output.contains("-"), "Unguessed locations should be represented by '-'.");
+	}
+
+	@Test
+	public void testPlayerGuessesComputerGrid_Miss() {
+		// Arrange: Simulate the computer's grid
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outputStream)); // Capture output for verification
+
+		// Simulate a miss at a specific location
+		computer.playerGrid.markMiss(5, 5); // Miss at (5, 5)
+
+		// Act: Call printStatus to display the grid
+		computer.playerGrid.printStatus();
+		System.setOut(System.out); // Reset System.out
+		String output = outputStream.toString();
+
+		// Assert: Verify the miss is displayed as "O"
+		assertTrue(output.contains("O"), "A missed guess should be marked as 'O'.");
 	}
 
 	@Test
@@ -166,6 +188,172 @@ class GridTest {
 
 		// Assert: Verify the grid displays the ship with the correct symbol
 		assertTrue(output.contains("C"), "The Cruiser should be represented by 'C' on the grid.");
+	}
+
+	@Test
+	public void testPrintGridCombined() {
+		// Arrange: Set up grid locations with hits, misses, and ships
+		for (int i = 0; i < Grid.NUM_ROWS; i++) {
+			for (int j = 0; j < Grid.NUM_COLS; j++) {
+				if (i % 2 == 0) {
+					when(mockLocations[i][j].checkHit()).thenReturn(true);
+				} else if (j % 3 == 0) {
+					when(mockLocations[i][j].checkMiss()).thenReturn(true);
+				} else if (i % 3 == 0) {
+					when(mockLocations[i][j].hasShip()).thenReturn(true);
+					when(mockLocations[i][j].getLengthOfShip()).thenReturn(3);
+				} else {
+					when(mockLocations[i][j].isUnguessed()).thenReturn(true);
+				}
+			}
+		}
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outputStream));
+		grid.printCombined();
+		System.setOut(System.out);
+
+		// Assert: Verify that hits, misses, ships, and unguessed cells are displayed
+		String output = outputStream.toString();
+		assertTrue(output.contains("D"), "Destroyer cells should be printed as 'D'.");
+		assertTrue(output.contains("C"), "Cruiser cells should be printed as 'C'.");
+		assertTrue(output.contains("B"), "Battleship cells should be printed as 'B'.");
+		assertTrue(output.contains("A"), "Carrier cells should be printed as 'A'.");
+	}
+
+	@Test
+	public void testPrintShips_ShipSymbols_type1() {
+		// Arrange: Mock ships with different lengths
+		Ship mockShipA = mock(Ship.class);
+		when(mockShipA.isLocationSet()).thenReturn(true);
+		when(mockShipA.isDirectionSet()).thenReturn(true);
+		when(mockShipA.getRow()).thenReturn(0);
+		when(mockShipA.getCol()).thenReturn(0);
+		when(mockShipA.getLength()).thenReturn(5); // Aircraft Carrier
+		when(mockShipA.getDirection()).thenReturn(0); // Horizontal placement
+
+		Ship mockShipB = mock(Ship.class);
+		when(mockShipB.isLocationSet()).thenReturn(true);
+		when(mockShipB.isDirectionSet()).thenReturn(true);
+		when(mockShipB.getRow()).thenReturn(1);
+		when(mockShipB.getCol()).thenReturn(0);
+		when(mockShipB.getLength()).thenReturn(4); // Battleship
+		when(mockShipB.getDirection()).thenReturn(0); // Horizontal placement
+
+		Ship mockShipC = mock(Ship.class);
+		when(mockShipC.isLocationSet()).thenReturn(true);
+		when(mockShipC.isDirectionSet()).thenReturn(true);
+		when(mockShipC.getRow()).thenReturn(2);
+		when(mockShipC.getCol()).thenReturn(0);
+		when(mockShipC.getLength()).thenReturn(3); // Cruiser
+		when(mockShipC.getDirection()).thenReturn(0); // Horizontal placement
+
+		Ship mockShipD = mock(Ship.class);
+		when(mockShipD.isLocationSet()).thenReturn(true);
+		when(mockShipD.isDirectionSet()).thenReturn(true);
+		when(mockShipD.getRow()).thenReturn(3);
+		when(mockShipD.getCol()).thenReturn(0);
+		when(mockShipD.getLength()).thenReturn(2); // Destroyer
+		when(mockShipD.getDirection()).thenReturn(0); // Horizontal placement
+
+		// Place the ships on the player's grid
+		player.chooseShipLocation(mockShipA, 0, 0, 0);
+		player.chooseShipLocation(mockShipB, 1, 0, 0);
+		player.chooseShipLocation(mockShipC, 2, 0, 0);
+		player.chooseShipLocation(mockShipD, 3, 0, 0);
+
+		// Act: Capture the output of printShips()
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outputStream));
+		player.playerGrid.printShips(); // Calls generalPrintMethod(1)
+		System.setOut(System.out); // Reset System.out
+		String output = outputStream.toString();
+
+		// Assert: Verify the correct symbols are displayed
+		assertTrue(output.contains("A"), "The Aircraft Carrier should be represented by 'A'.");
+		assertTrue(output.contains("B"), "The Battleship should be represented by 'B'.");
+		assertTrue(output.contains("C"), "The Cruiser should be represented by 'C'.");
+		assertTrue(output.contains("D"), "The Destroyer should be represented by 'D'.");
+	}
+
+	@Test
+	public void testPrintCombined_FullCoverageForShipSymbols() {
+		// Arrange: Mock ships with different lengths
+		Ship mockShipD = mock(Ship.class);
+		when(mockShipD.isLocationSet()).thenReturn(true);
+		when(mockShipD.isDirectionSet()).thenReturn(true);
+		when(mockShipD.getRow()).thenReturn(0);
+		when(mockShipD.getCol()).thenReturn(0);
+		when(mockShipD.getLength()).thenReturn(2); // Destroyer
+		when(mockShipD.getDirection()).thenReturn(0); // Horizontal placement
+
+		Ship mockShipC = mock(Ship.class);
+		when(mockShipC.isLocationSet()).thenReturn(true);
+		when(mockShipC.isDirectionSet()).thenReturn(true);
+		when(mockShipC.getRow()).thenReturn(1);
+		when(mockShipC.getCol()).thenReturn(0);
+		when(mockShipC.getLength()).thenReturn(3); // Cruiser
+		when(mockShipC.getDirection()).thenReturn(0); // Horizontal placement
+
+		Ship mockShipB = mock(Ship.class);
+		when(mockShipB.isLocationSet()).thenReturn(true);
+		when(mockShipB.isDirectionSet()).thenReturn(true);
+		when(mockShipB.getRow()).thenReturn(2);
+		when(mockShipB.getCol()).thenReturn(0);
+		when(mockShipB.getLength()).thenReturn(4); // Battleship
+		when(mockShipB.getDirection()).thenReturn(0); // Horizontal placement
+
+		// Place ships on the player's grid
+		player.chooseShipLocation(mockShipD, 0, 0, 0); // Destroyer
+		player.chooseShipLocation(mockShipC, 1, 0, 0); // Cruiser
+		player.chooseShipLocation(mockShipB, 2, 0, 0); // Battleship
+
+		// Mark hits on some locations
+		player.playerGrid.markHit(0, 0); // Hit on the first cell of Destroyer
+		player.playerGrid.markHit(1, 1); // Hit on the second cell of Cruiser
+		player.playerGrid.markHit(2, 2); // Hit on the third cell of Battleship
+
+		// Act: Capture the output of printCombined()
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outputStream));
+		player.playerGrid.printCombined(); // Calls generalPrintMethod(2)
+		System.setOut(System.out); // Reset System.out
+		String output = outputStream.toString();
+
+		// Assert: Verify that all symbols are displayed correctly
+		assertTrue(output.contains("D"), "The Destroyer should be represented by 'D'.");
+		assertTrue(output.contains("C"), "The Cruiser should be represented by 'C'.");
+		assertTrue(output.contains("B"), "The Battleship should be represented by 'B'.");
+		assertTrue(output.contains("X"), "The hit locations should be represented by 'X'.");
+	}
+
+	@Test
+	public void testPrintCombined_ShipSymbolsWithHits_type2() {
+		// Arrange: Mock ships with different lengths
+		Ship mockShipA = mock(Ship.class);
+		when(mockShipA.isLocationSet()).thenReturn(true);
+		when(mockShipA.isDirectionSet()).thenReturn(true);
+		when(mockShipA.getRow()).thenReturn(0);
+		when(mockShipA.getCol()).thenReturn(0);
+		when(mockShipA.getLength()).thenReturn(5); // Aircraft Carrier
+		when(mockShipA.getDirection()).thenReturn(0); // Horizontal placement
+
+		player.chooseShipLocation(mockShipA, 0, 0, 0);
+
+		// Mark hits on the grid
+		player.playerGrid.markHit(0, 0); // Hit on the first location of Aircraft Carrier
+		player.playerGrid.markHit(0, 1); // Hit on the second location of Aircraft Carrier
+
+		// Act: Capture the output of printCombined()
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outputStream));
+		player.playerGrid.printCombined(); // Calls generalPrintMethod(2)
+		System.setOut(System.out); // Reset System.out
+		String output = outputStream.toString();
+
+		// Assert: Verify the ship symbols and hits are displayed correctly
+		assertTrue(output.contains("A"), "The Aircraft Carrier should be represented by 'A'.");
+		assertTrue(output.contains("X"), "The hit locations should be represented by 'X'.");
 	}
 
 	/*
@@ -388,13 +576,92 @@ class GridTest {
 		}
 	}
 
-	// set directional as 3 to throw invalid
 	@Test
-	public void testAddShipThrowsErrorForInvalidDirection() {
-		// Arrange: Create a mock ship with valid location but invalid direction
-		Ship mockShip = mock(Ship.class);
-		when(mockShip.isLocationSet()).thenReturn(true); // Location is set
-		when(mockShip.isDirectionSet()).thenReturn(false); // Direction not properly set
-		assertEquals(mockShip.isDirectionSet(), false);
+	void testSwitchCounterToIntegerForArray_ValidInputs() {
+		grid = new Grid();
+		// Test valid inputs
+		assertEquals(0, grid.switchCounterToIntegerForArray(65));
+		assertEquals(1, grid.switchCounterToIntegerForArray(66));
+		assertEquals(9, grid.switchCounterToIntegerForArray(74));
+		assertEquals(25, grid.switchCounterToIntegerForArray(90));
 	}
+
+	@Test
+	void testSwitchCounterToIntegerForArray_InvalidInputs() {
+		Grid grid = new Grid();
+
+		// Test invalid inputs
+		Exception exception1 = assertThrows(IllegalArgumentException.class,
+				() -> grid.switchCounterToIntegerForArray(64),
+				"Input 64 should throw IllegalArgumentException");
+		assertEquals("ERROR OCCURED IN SWITCH", exception1.getMessage());
+
+		Exception exception2 = assertThrows(IllegalArgumentException.class,
+				() -> grid.switchCounterToIntegerForArray(91),
+				"Input 91 should throw IllegalArgumentException");
+		assertEquals("ERROR OCCURED IN SWITCH", exception2.getMessage());
+
+		Exception exception3 = assertThrows(IllegalArgumentException.class,
+				() -> grid.switchCounterToIntegerForArray(-1),
+				"Input -1 should throw IllegalArgumentException");
+		assertEquals("ERROR OCCURED IN SWITCH", exception3.getMessage());
+	}
+
+	@Test
+	void testSwitchCounterToIntegerForArray_AllValidCases() {
+		Grid grid = new Grid();
+
+		// Test all valid cases from 65 to 90
+		for (int i = 65; i <= 90; i++) {
+			assertEquals(i - 65, grid.switchCounterToIntegerForArray(i)
+            );
+		}
+	}
+
+	@Test
+	void testAddShipThrowsErrorForUnsetDirectionOrLocation() {
+		// Arrange: Mock a ship with unset direction and/or location
+		Ship mockShip = mock(Ship.class);
+
+		// Scenario 1: Direction is not set
+		when(mockShip.isDirectionSet()).thenReturn(false);
+		when(mockShip.isLocationSet()).thenReturn(true);
+
+		Grid testGrid = new Grid();
+
+		// Act & Assert: Expect an exception
+		IllegalArgumentException exception1 = assertThrows(
+				IllegalArgumentException.class,
+				() -> testGrid.addShip(mockShip),
+				"Expected an exception when direction is not set"
+		);
+		assertEquals("ERROR! Direction or Location is unset/default", exception1.getMessage());
+
+		// Scenario 2: Location is not set
+		when(mockShip.isDirectionSet()).thenReturn(true);
+		when(mockShip.isLocationSet()).thenReturn(false);
+
+		IllegalArgumentException exception2 = assertThrows(
+				IllegalArgumentException.class,
+				() -> testGrid.addShip(mockShip),
+				"Expected an exception when location is not set"
+		);
+		assertEquals("ERROR! Direction or Location is unset/default", exception2.getMessage());
+
+		// Scenario 3: Both are not set
+		when(mockShip.isDirectionSet()).thenReturn(false);
+		when(mockShip.isLocationSet()).thenReturn(false);
+
+		IllegalArgumentException exception3 = assertThrows(
+				IllegalArgumentException.class,
+				() -> testGrid.addShip(mockShip),
+				"Expected an exception when both direction and location are not set"
+		);
+		assertEquals("ERROR! Direction or Location is unset/default", exception3.getMessage());
+	}
+
+
+	/************ DECISION_TABLES ************/
+
+
 }
