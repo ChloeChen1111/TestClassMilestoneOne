@@ -1,7 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class LocationTest {
 
@@ -92,6 +92,19 @@ class LocationTest {
         assertEquals(-1, location.getLengthOfShip());  // Initially -1
         location.setLengthOfShip(4);
         assertEquals(4, location.getLengthOfShip());
+    }
+    @Test
+    void testGetAndSetDirectionOfShip() {
+        // Initially, directionOfShip should be -1
+        assertEquals(-1, location.getDirectionOfShip());
+
+        // Set a new direction value and verify it
+        location.setDirectionOfShip(2);
+        assertEquals(2, location.getDirectionOfShip());
+
+        // Set another direction value and verify it
+        location.setDirectionOfShip(4);
+        assertEquals(4, location.getDirectionOfShip());
     }
 
 }
