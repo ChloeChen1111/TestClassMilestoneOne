@@ -19,6 +19,8 @@ public class BattleshipTest {
     private Player player;
     private Player computer;
     private Player user;
+    private Grid mockUserGrid;
+    private Grid mockComputerGrid;
     private ByteArrayOutputStream outContent;
     private final PrintStream originalOut = System.out;
     private final InputStream originalIn = System.in;
