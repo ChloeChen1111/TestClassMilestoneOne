@@ -1,10 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ShipTest {
 
@@ -24,130 +21,87 @@ class ShipTest {
 	void tearDown() throws Exception {
 	}
 
-	/*
-	 * Tests that the constructor properly initializes within the Ship class
-	 */
 	@Test
-	void testShip() {
-		Ship testShip = new Ship(2);
-		assertEquals(testShip.getDirection(), -1);
-		assertEquals(testShip.getLength(), 2);
-		assertEquals(testShip.getRow(), -1);
-		assertEquals(testShip.getCol(), -1);
+	void testShipConstructor() {
+		Ship testShip = new Ship(3);
+		assertEquals(-1, testShip.getDirection());
+		assertEquals(3, testShip.getLength());
+		assertEquals(-1, testShip.getRow());
+		assertEquals(-1, testShip.getCol());
 	}
 
-	/*
-	 * This test ensures that when a location is set with a ship that it is properly recorded by the isLocationSet
-	 * method (boolean)
-	 */
 	@Test
 	void testIsLocationSet() {
 		Ship testShip = new Ship(2);
-		assertEquals(testShip.isLocationSet(), false);
+		assertFalse(testShip.isLocationSet());
 		testShip.setLocation(0, 0);
-		assertEquals(testShip.isLocationSet(), true);
+		assertTrue(testShip.isLocationSet());
 	}
-	
 
-	/*
-	 * This test ensures that when a direction is set (either vertical, horizontal, or unset) that the IsDirectionSet
-	 * method appropriately records the change
-	 */
 	@Test
 	void testIsDirectionSet() {
 		Ship testShip = new Ship(2);
-		assertEquals(testShip.isDirectionSet(), false);
+		assertFalse(testShip.isDirectionSet());
 		testShip.setDirection(1);
-		assertEquals(testShip.isDirectionSet(), true);
-		assertThrows(IllegalArgumentException.class, () -> {
-	        testShip.setDirection(2);
-	    });
-		assertThrows(IllegalArgumentException.class, () -> {
-	        testShip.setDirection(-2);
-	    });
+		assertTrue(testShip.isDirectionSet());
+		assertThrows(IllegalArgumentException.class, () -> testShip.setDirection(2));
+		assertThrows(IllegalArgumentException.class, () -> testShip.setDirection(-2));
 	}
 
-	/*
-	 * This test ensures that when a location is set with a ship, that it is set in the specified location
-	 * and that the status is changed appropriately for that row and column
-	 */
 	@Test
 	void testSetLocation() {
 		Ship testShip = new Ship(2);
-		testShip.setLocation(0, 0);
-		assertEquals(testShip.getRow(), 0);
-		assertEquals(testShip.getCol(), 0);
+		testShip.setLocation(2, 3);
+		assertEquals(2, testShip.getRow());
+		assertEquals(3, testShip.getCol());
 	}
 
-	/*
-	 * This test ensures that the direction is properly recorded for the ship when it is first set
-	 */
 	@Test
 	void testSetDirection() {
 		Ship testShip = new Ship(2);
-		testShip.setDirection(0);
-		assertEquals(testShip.getDirection(), 0);
-		testShip.setDirection(1);
-		assertEquals(testShip.getDirection(), 1);
-		testShip.setDirection(-1);
-		assertEquals(testShip.getDirection(), -1);
+		testShip.setDirection(Ship.HORIZONTAL);
+		assertEquals(Ship.HORIZONTAL, testShip.getDirection());
+		testShip.setDirection(Ship.VERTICAL);
+		assertEquals(Ship.VERTICAL, testShip.getDirection());
+		testShip.setDirection(Ship.UNSET);
+		assertEquals(Ship.UNSET, testShip.getDirection());
 	}
 
-	/*
-	 * This test ensures that the row is properly set for the ship in the grid and not misappropriated.
-	 */
 	@Test
-	void testGetRow() {
-		Ship testShip = new Ship(3);
-		testShip.setLocation(4, 2);
-		assertEquals(testShip.getRow(), 4);
-	}
-
-	/*
-	 * This test ensures that the column is properly set for the ship in the grid and not misappropriated.
-	 */
-	@Test
-	void testGetCol() {
+	void testGetters() {
 		Ship testShip = new Ship(4);
-		testShip.setLocation(1, 3);
-		assertEquals(testShip.getCol(), 3);
+		assertEquals(-1, testShip.getRow());
+		assertEquals(-1, testShip.getCol());
+		assertEquals(4, testShip.getLength());
+		assertEquals(-1, testShip.getDirection());
 	}
 
-	/*
-	 * This test ensures that the length is properly set based on the input from the constructor of the ship
-	 */
-	@Test
-	void testGetLength() {
-		Ship testShip = new Ship(3);
-		assertEquals(testShip.getLength(), 3);
-	}
-
-	/*
-	 * This test ensures that the direction is properly set. -1 for unset, 0 for horizontal, and 1 for vertical
-	 */
-	@Test
-	void testGetDirection() {
-		Ship testShip = new Ship(2);
-		assertEquals(testShip.getDirection(), -1);
-		testShip.setDirection(1);
-		assertEquals(testShip.getDirection(), 1);
-		testShip.setDirection(0);
-		assertEquals(testShip.getDirection(), 0);
-	}
-	
-	/*
-	 * this test ensures that the toString method properly called the private toString method and prints out
-	 * the proper message based on which public toString method is being called, null, 0, or 1
-	 */
 	@Test
 	void testToString() {
 		Ship testShip = new Ship(4);
+		assertEquals("Ship: -1, -1 with length 4 and direction UNSET", testShip.toString());
+
 		testShip.setLocation(5, 7);
-		assertEquals(testShip.toString(), "Ship: 5, 7 with length 4 and direction UNSET");
-		testShip.setDirection(0);
-		assertEquals(testShip.toString(), "Ship: 5, 7 with length 4 and direction HORIZONTAL");
-		testShip.setDirection(1);
-		assertEquals(testShip.toString(), "Ship: 5, 7 with length 4 and direction VERTICAL");
+		assertEquals("Ship: 5, 7 with length 4 and direction UNSET", testShip.toString());
+
+		testShip.setDirection(Ship.HORIZONTAL);
+		assertEquals("Ship: 5, 7 with length 4 and direction HORIZONTAL", testShip.toString());
+
+		testShip.setDirection(Ship.VERTICAL);
+		assertEquals("Ship: 5, 7 with length 4 and direction VERTICAL", testShip.toString());
+	}
+
+	@Test
+	void testSetDirectionInvalid() {
+		Ship testShip = new Ship(3);
+		assertThrows(IllegalArgumentException.class, () -> testShip.setDirection(99));
+	}
+
+	@Test
+	void testDirectionToStringVertical() {
+		Ship testShip = new Ship(4);
+		testShip.setDirection(Ship.VERTICAL);
+		assertEquals("Ship: -1, -1 with length 4 and direction VERTICAL", testShip.toString());
 	}
 
 }
