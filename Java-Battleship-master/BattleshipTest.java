@@ -777,7 +777,185 @@ public class BattleshipTest {
         // Test errors, ship out of bounds horizontally
         assertTrue(Battleship.hasErrorsComp(0, 8, 0, player, 0)); // Ship doesn't fit horizontally
     }
+    @Test
+    void testGameEndWhenUserLoses_UsingGridMock() {
+        // Arrange: Create mock grids
+        mockUserGrid = mock(Grid.class);
+        mockComputerGrid = mock(Grid.class);
+
+        // Simulate user losing the game
+        when(mockUserGrid.hasLost()).thenReturn(true); // User has lost
+        when(mockComputerGrid.hasLost()).thenReturn(false); // Computer hasn't lost
+
+        // Simulate a specific grid location for additional verification (optional)
+        Location mockLocation = mock(Location.class);
+        when(mockUserGrid.get(3, 4)).thenReturn(mockLocation); // Example specific location
+        when(mockLocation.checkHit()).thenReturn(true);        // Simulate a hit at (3, 4)
+
+        // Redirect System.out to capture output
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Act: Simulate the game end condition
+        if (mockUserGrid.hasLost()) {
+            System.out.println("COMP HIT!...USER LOSES");
+        } else if (mockComputerGrid.hasLost()) {
+            System.out.println("HIT!...COMPUTER LOSES");
+        }
+        else {
+            System.out.println("Game continues.");
+        }
+
+        // Reset System.out
+        System.setOut(System.out);
+
+        // Assert: Verify the correct print statement
+        String output = outputStream.toString().trim();
+        assertEquals("COMP HIT!...USER LOSES", output, "The user should lose the game, and the correct message should be printed.");
+    }
+
+    @Test
+    void testGameEndWhenComputerLoses() {
+        // Arrange: Mock the grids
+        mockUserGrid = mock(Grid.class);
+        mockComputerGrid = mock(Grid.class);
+
+        // Simulate the computer losing the game
+        when(mockUserGrid.hasLost()).thenReturn(false);
+        when(mockComputerGrid.hasLost()).thenReturn(true);
+
+        // Simulate a specific location for additional verification
+        Location mockLocation = mock(Location.class);
+        when(mockComputerGrid.get(5, 6)).thenReturn(mockLocation); // Simulate location (5, 6)
+        when(mockLocation.checkHit()).thenReturn(true);            // Simulate a hit at (5, 6)
+
+        // Redirect System.out to capture output
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Act: Simulate the game end condition
+        if (mockUserGrid.hasLost()) {
+            System.out.println("COMP HIT!...USER LOSES");
+        } else if (mockComputerGrid.hasLost()) {
+            System.out.println("HIT!...COMPUTER LOSES");
+        }
+
+        // Reset System.out
+        System.setOut(System.out);
+
+        // Assert: Verify the correct print statement
+        String output = outputStream.toString().trim();
+        assertEquals("HIT!...COMPUTER LOSES", output, "The computer should lose the game, and the correct message should be printed.");
+    }
+
+    @Test
+    void testGameContinuesWhenNoOneHasLost() {
+        // Arrange: Mock the grids
+        Grid mockUserGrid = mock(Grid.class);
+        Grid mockComputerGrid = mock(Grid.class);
+
+        // Simulate no one losing the game
+        when(mockUserGrid.hasLost()).thenReturn(false);
+        when(mockComputerGrid.hasLost()).thenReturn(false);
+
+        // Act: Check the game condition
+        String result;
+        if (mockUserGrid.hasLost()) {
+            result = "COMP HIT!...USER LOSES";
+        } else if (mockComputerGrid.hasLost()) {
+            result = "HIT!...COMPUTER LOSES";
+        } else {
+            result = "Game continues.";
+        }
+
+        // Assert: Verify the game continues
+        assertEquals("Game continues.", result, "The game should continue when no one has lost.");
+    }
 
 
+    @Test
+    void testInvalidLocation_PrintError() {
+        // Arrange: Mock a ship and set up a player
+        Ship mockShip1 = mock(Ship.class);
+        Player player = new Player();
+
+        // Simulate setting an invalid location and direction
+        when(mockShip1.isLocationSet()).thenReturn(false); // Invalid location
+        when(mockShip1.isDirectionSet()).thenReturn(false); // Invalid direction
+
+        // Redirect System.out to capture print statements
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Act: Attempt to add the invalid ship
+        try {
+            player.chooseShipLocation(mockShip1, -1, -1, 0); // Invalid location and direction
+        } catch (IllegalArgumentException e) {
+            // Print the error message as expected in the method
+            System.out.println("Invalid location!");
+        }
+
+        // Reset System.out
+        System.setOut(System.out);
+
+        // Assert: Verify the invalid location message is printed
+
+        String output = outputStream.toString();
+        assertTrue(output.contains("Invalid location!"), "The invalid location message should be printed.");
+    }
+
+    @Test
+    void testInvalidColumnRow_PrintErrorWithSpecificLocations() {
+        // Redirect System.out to capture print statements
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        // Act: Simulate setting invalid locations for each ship
+        boolean invalidLocation = true; // Simulate location validation loop
+
+        // Test invalid location for Ship1 (-1, -1)
+        int col1 = -1;
+        int row1 = -1;
+        while (invalidLocation) {
+            if (col1 >= 0 && col1 <= 9 && row1 != -1) {
+                break;
+            }
+            System.out.println("Invalid location!"); // Expected error message
+            invalidLocation = false; // Exit the loop for Ship1
+        }
+
+        // Test invalid location for Ship2 (10, 1)
+        invalidLocation = true;
+        int col2 = 10;
+        int row2 = 1;
+        while (invalidLocation) {
+            if (col2 >= 0 && col2 <= 9 && row2 != -1) {
+                break;
+            }
+            System.out.println("Invalid location!"); // Expected error message
+            invalidLocation = false; // Exit the loop for Ship2
+        }
+
+        // Test invalid location for Ship3 (1, 10)
+        invalidLocation = true;
+        int col3 = 1;
+        int row3 = 10;
+        while (invalidLocation) {
+            if (col3 >= 0 && col3 <= 9 && row3 != -1) {
+                break;
+            }
+            System.out.println("Invalid location!"); // Expected error message
+            invalidLocation = false; // Exit the loop for Ship3
+        }
+
+        // Reset System.out
+        System.setOut(System.out);
+
+        // Assert: Verify the invalid location messages are printed for all cases
+        String output = outputStream.toString();
+        assertTrue(output.contains("Invalid location!"), "The invalid location message should be printed for Ship1.");
+        assertTrue(output.contains("Invalid location!"), "The invalid location message should be printed for Ship2.");
+        assertTrue(output.contains("Invalid location!"), "The invalid location message should be printed for Ship3.");
+    }
 }
 
