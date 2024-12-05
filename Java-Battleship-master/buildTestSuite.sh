@@ -37,15 +37,15 @@ if [ ! -f "lib/mockito-core.jar" ]; then
     curl -L https://repo1.maven.org/maven2/org/objenesis/objenesis/3.2/objenesis-3.2.jar -o lib/objenesis.jar
 fi
 
-CLASSPATH="build:lib/*"
+CLASSPATH="build/main:build/test:lib/*"
+
 
 # Compile the main classes
 echo "Building main classes..."
-if javac -d build Battleship.java Grid.java Location.java Player.java Randomizer.java Ship.java; then
+if javac -d build/main Src/*.java; then
     # Compile the test classes with all dependencies in classpath
     echo "Building test classes..."
-    if javac -cp "$CLASSPATH" -d build \
-        BattleshipTest.java GridTest.java LocationTest.java PlayerTest.java ShipTest.java RegressionTest.java; then
+    if javac -cp "$CLASSPATH" -d build/test Tests/*.java; then
         BUILD_STATUS=true
         echo "Build successful"
     fi
@@ -56,7 +56,7 @@ if [ "$BUILD_STATUS" = true ]; then
     echo "Running tests..."
     java -cp "$CLASSPATH" org.junit.platform.console.ConsoleLauncher \
         --scan-class-path \
-        --class-path build \
+        --class-path build/main:build/test \
         --details=tree \
         --reports-dir=test-results > "$TEST_RESULTS" 2>&1
 
