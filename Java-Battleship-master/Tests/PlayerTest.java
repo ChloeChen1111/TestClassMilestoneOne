@@ -1,3 +1,8 @@
+package Tests;
+
+import Src.Grid;
+import Src.Player;
+import Src.Ship;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,7 +20,7 @@ public class PlayerTest{
     @BeforeAll
     static void setUp() throws Exception {
         try{
-            // Mock general Ship and Grid classes for testing
+            // Mock general Src.Ship and Src.Grid classes for testing
             mockShip = mock(Ship.class);
             mockGrid = mock(Grid.class);
 
@@ -194,7 +199,7 @@ public class PlayerTest{
     //TC2
     @Test
     public void testChooseShipLocation_NoSpaceAvailable() {
-        // Test Case 2: Location and direction set, no space available
+        // Test Case 2: Src.Location and direction set, no space available
         when(mockShip.isLocationSet()).thenReturn(true);
         when(mockShip.isDirectionSet()).thenReturn(true);
         when(mockPlayerGrid.hasShip(anyInt(), anyInt())).thenReturn(false);
@@ -203,13 +208,13 @@ public class PlayerTest{
 
         verify(mockShip).setLocation(3, 4);
         verify(mockShip).setDirection(1);
-        verify(mockGrid, never()).addShip(mockShip);  // Ship not added since no space is available
+        verify(mockGrid, never()).addShip(mockShip);  // Src.Ship not added since no space is available
     }
 
-    //TC4: Location is set, but direction is not set, and no space is available. The ship cannot be placed.
+    //TC4: Src.Location is set, but direction is not set, and no space is available. The ship cannot be placed.
     @Test
     public void testChooseShipLocation_DirectionNotSet_NoSpaceAvailable() throws Exception {
-        // Test Case 3: Location set, direction not set
+        // Test Case 3: Src.Location set, direction not set
         when(mockShip.isLocationSet()).thenReturn(false);
         when(mockShip.isDirectionSet()).thenReturn(false);
         when(mockPlayerGrid.hasShip(anyInt(), anyInt())).thenReturn(false);
@@ -218,7 +223,7 @@ public class PlayerTest{
         // since the player choose location, so the set has been change
         if(mockShip.isLocationSet() && mockShip.isDirectionSet()){
             // Verify that the ship was not added to the grid
-            verify(mockPlayerGrid, never()).addShip(mockShip);  // Ship not added since no space is available
+            verify(mockPlayerGrid, never()).addShip(mockShip);  // Src.Ship not added since no space is available
         }
     }
 

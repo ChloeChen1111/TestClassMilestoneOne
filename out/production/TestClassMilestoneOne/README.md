@@ -1,6 +1,6 @@
-# Java-Battleship
+# Java-Src.Battleship
 
-The game, Battleship, written in Java.
+The game, Src.Battleship, written in Java.
 
 ## Requirements / Dependencies
 
@@ -20,25 +20,25 @@ The game, Battleship, written in Java.
 ## Running Project & Unit Tests
 
 **Running application**\
-With the Eclipse IDE opened and the Battleship project imported, right-click on Battleship.java,
+With the Eclipse IDE opened and the Src.Battleship project imported, right-click on Src.Battleship.java,
 select Run As, then select Java Application. The program will launch in the IDE's Console window.
 
-**Running unit tests (LocationTest.java example)**\
-With the Eclipse IDE opened and the Battleship project imported, right-click on LocationTest.java,
+**Running unit tests (Tests.LocationTest.java example)**\
+With the Eclipse IDE opened and the Src.Battleship project imported, right-click on Tests.LocationTest.java,
 select Run As, then select JUnit Test. Test results will be displayed in the IDE's JUnit window.
 
-For this example, LocationTest.java tests the paired accessor and mutator functions in Location.java. Half of the mutators take no parameters or only a Boolean value resulting in simple test cases. The other half take integer parameters. Equivalence class partitioning was performed for these functions and their corresponding accessor functions.
+For this example, Tests.LocationTest.java tests the paired accessor and mutator functions in Src.Location.java. Half of the mutators take no parameters or only a Boolean value resulting in simple test cases. The other half take integer parameters. Equivalence class partitioning was performed for these functions and their corresponding accessor functions.
 
 **Code coverage analysis**\
-With the Eclipse IDE opened and the Battleship project imported, right-click on the top-level
-Battleship project directory, select Coverage As, then select JUnit Test. Coverage results
+With the Eclipse IDE opened and the Src.Battleship project imported, right-click on the top-level
+Src.Battleship project directory, select Coverage As, then select JUnit Test. Coverage results
 will be displayed in the IDE's Coverage window.
 
 ## Usage
 
-Here's a short explanation on how to use **Java-Battleship**:
+Here's a short explanation on how to use **Java-Src.Battleship**:
 
-* Use `java Battleship` on the command-line to run the code
+* Use `java Src.Battleship` on the command-line to run the code
 * When the application starts, you, the player, sets up your board by typing in the on-screen coordinates.
 * Then, the computer makes its own board and you play against it by guessing its ships' locations.
 	* NOTE: The computer's board is printed on screen, just so the game can go faster.

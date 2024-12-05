@@ -1,7 +1,10 @@
+package Tests;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import Src.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,6 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import java.lang.reflect.Method;
 import java.util.InputMismatchException;
-import java.lang.reflect.Field;
 import java.util.Random;
 
 
@@ -27,7 +29,7 @@ public class BattleshipTest {
     private final PrintStream originalOut = System.out;
     private final InputStream originalIn = System.in;
 
-    // Test Randomizer for controlled computer moves
+    // Test Src.Randomizer for controlled computer moves
     static class TestRandomizer extends Randomizer {
         private static int[] values;
         private static int index = 0;
@@ -62,7 +64,7 @@ public class BattleshipTest {
     @Test
     void testCompleteGameFlow() {
         String input = String.join("\n",
-                // Ship placements (row, col, direction)
+                // Src.Ship placements (row, col, direction)
                 "A", "1", "0",
                 "B", "2", "0",
                 "C", "3", "0",
@@ -87,7 +89,7 @@ public class BattleshipTest {
 
         String output = outContent.toString();
         assertTrue(output.contains("JAVA BATTLESHIP"), "Game title should appear");
-        assertTrue(output.contains("Player SETUP"), "Player setup should complete");
+        assertTrue(output.contains("Src.Player SETUP"), "Src.Player setup should complete");
         assertTrue(output.contains("Computer SETUP"), "Computer setup should complete");
     }
 
@@ -148,7 +150,7 @@ public class BattleshipTest {
     @Test
     void testGameInitialization() {
         String input = String.join("\n",
-                // Ship placements
+                // Src.Ship placements
                 "A", "1", "0",
                 "B", "2", "0",
                 "C", "3", "0",
@@ -218,7 +220,7 @@ public class BattleshipTest {
         // Place a ship at a known location
         user.playerGrid.setShip(0, 0, true);
 
-        // Create a custom Randomizer class for testing
+        // Create a custom Src.Randomizer class for testing
         class TestRandom extends Random {
             private int callCount = 0;
 
@@ -262,7 +264,7 @@ public class BattleshipTest {
         Player user = new Player();
         // Ensure no ship at target location (1,1)
 
-        // Create a custom Randomizer class for testing
+        // Create a custom Src.Randomizer class for testing
         class TestRandom extends Random {
             private int callCount = 0;
 
@@ -305,7 +307,7 @@ public class BattleshipTest {
         Player computer = new Player();
         Player user = new Player();
 
-        // Create a custom Randomizer class for testing
+        // Create a custom Src.Randomizer class for testing
         class TestRandom extends Random {
             @Override
             public int nextInt(int bound) {
@@ -350,7 +352,7 @@ public class BattleshipTest {
         // Mark position (0,0) as already guessed
         computer.oppGrid.markHit(0, 0);
 
-        // Create a custom Randomizer class for testing
+        // Create a custom Src.Randomizer class for testing
         class TestRandom extends Random {
             private int callCount = 0;
 
@@ -390,7 +392,7 @@ public class BattleshipTest {
 
     @AfterEach
     void cleanup() {
-        // Reset the Randomizer instance after each test
+        // Reset the Src.Randomizer instance after each test
         Randomizer.theInstance = null;
     }
 
@@ -485,11 +487,11 @@ public class BattleshipTest {
     public void testPlayerShipsCorrectlyPlaced() {
         // Simulate user input for 5 ships
         String simulatedInput =
-                "A\n1\n0\n" +  // Ship 1: A1, horizontal
-                        "B\n2\n1\n" +  // Ship 2: B2, vertical
-                        "C\n3\n0\n" +  // Ship 3: C3, horizontal
-                        "D\n4\n1\n" +  // Ship 4: D4, vertical
-                        "E\n5\n0\n";   // Ship 5: E5, horizontal
+                "A\n1\n0\n" +  // Src.Ship 1: A1, horizontal
+                        "B\n2\n1\n" +  // Src.Ship 2: B2, vertical
+                        "C\n3\n0\n" +  // Src.Ship 3: C3, horizontal
+                        "D\n4\n1\n" +  // Src.Ship 4: D4, vertical
+                        "E\n5\n0\n";   // Src.Ship 5: E5, horizontal
 
         InputStream originalIn = System.in;
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
@@ -519,11 +521,11 @@ public class BattleshipTest {
     public void testShipGridIntegrity() {
         // Simulate user input for placing 5 ships
         String simulatedInput =
-                "A\n1\n0\n" +  // Ship 1: A1, horizontal
-                        "B\n2\n1\n" +  // Ship 2: B2, vertical
-                        "C\n3\n0\n" +  // Ship 3: C3, horizontal
-                        "D\n4\n1\n" +  // Ship 4: D4, vertical
-                        "E\n5\n0\n";   // Ship 5: E5, horizontal
+                "A\n1\n0\n" +  // Src.Ship 1: A1, horizontal
+                        "B\n2\n1\n" +  // Src.Ship 2: B2, vertical
+                        "C\n3\n0\n" +  // Src.Ship 3: C3, horizontal
+                        "D\n4\n1\n" +  // Src.Ship 4: D4, vertical
+                        "E\n5\n0\n";   // Src.Ship 5: E5, horizontal
 
         InputStream originalIn = System.in;
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
@@ -538,8 +540,8 @@ public class BattleshipTest {
             for (Ship ship : player.ships) {
                 int row = ship.getRow();
                 int col = ship.getCol();
-                assertTrue(row >= 0 && row < 10, "Ship's row should be within grid bounds.");
-                assertTrue(col >= 0 && col < 10, "Ship's column should be within grid bounds.");
+                assertTrue(row >= 0 && row < 10, "Src.Ship's row should be within grid bounds.");
+                assertTrue(col >= 0 && col < 10, "Src.Ship's column should be within grid bounds.");
             }
 
         } finally {
@@ -678,7 +680,7 @@ public class BattleshipTest {
     @Test
     public void testOverlapHorizontal() {
         Player player = new Player();
-        Ship ship1 = new Ship(4); // Ship of length 4
+        Ship ship1 = new Ship(4); // Src.Ship of length 4
         player.ships[0] = ship1;
 
         // Place the first ship at (0,0) horizontally
@@ -706,7 +708,7 @@ public class BattleshipTest {
     @Test
     public void testOverlapVertical() {
         Player player = new Player();
-        Ship ship1 = new Ship(4); // Ship of length 4
+        Ship ship1 = new Ship(4); // Src.Ship of length 4
         player.ships[0] = ship1;
 
         // Place the first ship at (0,0) vertically
@@ -725,7 +727,7 @@ public class BattleshipTest {
     @Test
     public void testOverlapHorizontalComp() {
         Player computer = new Player();
-        Ship ship1 = new Ship(4); // Ship of length 4
+        Ship ship1 = new Ship(4); // Src.Ship of length 4
         computer.ships[0] = ship1;
 
         // Place the first ship horizontally at (0, 0)
@@ -743,7 +745,7 @@ public class BattleshipTest {
     @Test
     public void testVerticalOverlap() {
         Player player = new Player();
-        Ship ship1 = new Ship(4); // Ship of length 4
+        Ship ship1 = new Ship(4); // Src.Ship of length 4
         player.ships[0] = ship1;
 
         // Place the first ship vertically at (0, 0)
@@ -761,25 +763,25 @@ public class BattleshipTest {
     @Test
     public void testVerticalShipOutOfBounds() {
         Player player = new Player();
-        Ship ship = new Ship(4); // Ship of length 4
+        Ship ship = new Ship(4); // Src.Ship of length 4
         player.ships[0] = ship;
 
         // Attempt to place a ship vertically starting at row 8, which should go out of bounds
         // Length + row = 4 + 8 = 12, which exceeds the grid boundary (10).
-        assertTrue(Battleship.hasErrorsComp(8, 0, 1, player, 0)); // Ship goes out of bounds
+        assertTrue(Battleship.hasErrorsComp(8, 0, 1, player, 0)); // Src.Ship goes out of bounds
     }
 
     @Test
     public void testHasErrorsComp() {
         Player player = new Player();
-        Ship ship = new Ship(3); // Ship of length 3
+        Ship ship = new Ship(3); // Src.Ship of length 3
         player.ships[0] = ship;
 
         // Test no errors, valid placement
         assertFalse(Battleship.hasErrorsComp(0, 0, 0, player, 0)); // No errors, ship fits horizontally
 
         // Test errors, ship out of bounds horizontally
-        assertTrue(Battleship.hasErrorsComp(0, 8, 0, player, 0)); // Ship doesn't fit horizontally
+        assertTrue(Battleship.hasErrorsComp(0, 8, 0, player, 0)); // Src.Ship doesn't fit horizontally
     }
     @Test
     void testGameEndWhenUserLoses_UsingGridMock() {

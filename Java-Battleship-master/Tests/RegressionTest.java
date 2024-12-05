@@ -1,3 +1,6 @@
+package Tests;
+
+import Src.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 
@@ -91,7 +94,7 @@ class RegressionTest {
         testGrid.markHit(3, 4);
 
         // Assert: Verify the location is marked as a hit
-        assertEquals(1, testGrid.getStatus(3, 4), "Location should be marked as a hit.");
+        assertEquals(1, testGrid.getStatus(3, 4), "Src.Location should be marked as a hit.");
     }
 
     @Test
@@ -149,7 +152,7 @@ class RegressionTest {
     }
 
 
-    //TC8. Out-of-Bounds Ship Placement
+    //TC8. Out-of-Bounds Src.Ship Placement
     @Test
     public void testOutOfBoundsPlacement() {
         // Arrange
@@ -190,7 +193,7 @@ class RegressionTest {
         boolean hasLost = grid.hasLost();
 
         // Assert
-        assertFalse(hasLost, "Player should not lose if less than 17 hits are made.");
+        assertFalse(hasLost, "Src.Player should not lose if less than 17 hits are made.");
     }
 
     // TC10. Win Condition
@@ -210,7 +213,7 @@ class RegressionTest {
         boolean hasLost = grid.hasLost();
 
         // Assert
-        assertTrue(hasLost, "Player should lose when all ships are sunk.");
+        assertTrue(hasLost, "Src.Player should lose when all ships are sunk.");
     }
 
     //TC 11: Random Value Generation

@@ -1,3 +1,6 @@
+package Mutants;
+
+import Src.Ship;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -124,6 +127,7 @@ class ShipMutantTest {
             throw e;
         }
     }
+
 
     // Keep the utility methods
     @BeforeAll

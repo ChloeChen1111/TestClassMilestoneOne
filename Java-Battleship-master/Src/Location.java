@@ -1,3 +1,5 @@
+package Src;
+
 public class Location
 {
     // Global Vars
@@ -11,7 +13,7 @@ public class Location
     private int lengthOfShip;
     private int directionOfShip;
     
-    // Location constructor. 
+    // Src.Location constructor.
     public Location()
     {
         // Set initial values
@@ -21,7 +23,7 @@ public class Location
         directionOfShip = -1;
     }
 
-    // Was this Location a hit?
+    // Was this Src.Location a hit?
     public boolean checkHit()
     {
         if (status == HIT)
@@ -72,13 +74,13 @@ public class Location
         this.hasShip = val;
     }
 
-    // Set the status of this Location.
+    // Set the status of this Src.Location.
     public void setStatus(int status)
     {
         this.status = status;
     }
 
-    // Get the status of this Location.
+    // Get the status of this Src.Location.
     public int getStatus()
     {
         return status;

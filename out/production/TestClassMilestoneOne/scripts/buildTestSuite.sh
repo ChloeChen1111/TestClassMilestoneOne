@@ -10,7 +10,7 @@
 # File: buildTestSuite.sh
 #
 # Description:
-# This shell script builds the Battleship project and associated J-Unit unit
+# This shell script builds the Src.Battleship project and associated J-Unit unit
 # tests.
 #
 #   DEPENDENCIES, LIMITATIONS, & DESIGN NOTES:

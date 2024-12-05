@@ -1,3 +1,5 @@
+package Src;
+
 public class Player
 {
     // These are the lengths of all of the ships.

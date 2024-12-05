@@ -1,7 +1,13 @@
+package Tests;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import Src.Grid;
+import Src.Location;
+import Src.Player;
+import Src.Ship;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,8 +17,8 @@ import java.io.PrintStream;
 
 class GridTest {
 
-	private static Grid grid; // Grid under test
-	private static Location[][] mockLocations; // Mocked Location objects
+	private static Grid grid; // Src.Grid under test
+	private static Location[][] mockLocations; // Mocked Src.Location objects
 	private static ByteArrayOutputStream outputStream;
 	private static Player player;
 	private static Player computer;
@@ -21,7 +27,7 @@ class GridTest {
 	@BeforeAll
 	public static void setUp() {
 
-		// Initialize the Grid object
+		// Initialize the Src.Grid object
 		grid = new Grid();
 
 		// Initialize player and computer
@@ -33,7 +39,7 @@ class GridTest {
 		outputStream = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outputStream));
 
-		// Mock the 2D Location array
+		// Mock the 2D Src.Location array
 		mockLocations = new Location[Grid.NUM_ROWS][Grid.NUM_COLS];
 
 		for (int row = 0; row < Grid.NUM_ROWS; row++) {
@@ -52,7 +58,7 @@ class GridTest {
 
 	@AfterAll
 	public static void tearDown() {
-		// Nullify the Grid and mock objects
+		// Nullify the Src.Grid and mock objects
 		grid = null;
 		mockLocations = null;
 	}
@@ -66,7 +72,7 @@ class GridTest {
 
 		// Place the mocked ship on the computer's grid
 		computer.chooseShipLocation(mockShip, 3, 4, 0); // Horizontal placement starting at (3, 4)
-		// Act: Player guesses a location with a ship
+		// Act: Src.Player guesses a location with a ship
 		computer.playerGrid.markHit(3, 4); // Guessed location is part of the ship
 
 		// Capture the output of the computer's grid status
@@ -124,12 +130,12 @@ class GridTest {
 
 		// Guess the hit location again
 		if (computer.playerGrid.alreadyGuessed(3, 4)) {
-			System.out.println("Location already guessed.");
+			System.out.println("Src.Location already guessed.");
 		}
 
 		// Guess the miss location again
 		if (computer.playerGrid.alreadyGuessed(2, 2)) {
-			System.out.println("Location already guessed.");
+			System.out.println("Src.Location already guessed.");
 		}
 
 		// Reset System.out
@@ -137,7 +143,7 @@ class GridTest {
 
 		// Assert: Verify that the output indicates the locations are already guessed
 		String output = outputStream.toString();
-		assertTrue(output.contains("Location already guessed."),
+		assertTrue(output.contains("Src.Location already guessed."),
 				"Feedback should indicate that the location was already guessed.");
 	}
 
@@ -217,7 +223,7 @@ class GridTest {
 		String output = outputStream.toString();
 		assertTrue(output.contains("D"), "Destroyer cells should be printed as 'D'.");
 		assertTrue(output.contains("C"), "Cruiser cells should be printed as 'C'.");
-		assertTrue(output.contains("B"), "Battleship cells should be printed as 'B'.");
+		assertTrue(output.contains("B"), "Src.Battleship cells should be printed as 'B'.");
 		assertTrue(output.contains("A"), "Carrier cells should be printed as 'A'.");
 	}
 
@@ -237,7 +243,7 @@ class GridTest {
 		when(mockShipB.isDirectionSet()).thenReturn(true);
 		when(mockShipB.getRow()).thenReturn(1);
 		when(mockShipB.getCol()).thenReturn(0);
-		when(mockShipB.getLength()).thenReturn(4); // Battleship
+		when(mockShipB.getLength()).thenReturn(4); // Src.Battleship
 		when(mockShipB.getDirection()).thenReturn(0); // Horizontal placement
 
 		Ship mockShipC = mock(Ship.class);
@@ -271,7 +277,7 @@ class GridTest {
 
 		// Assert: Verify the correct symbols are displayed
 		assertTrue(output.contains("A"), "The Aircraft Carrier should be represented by 'A'.");
-		assertTrue(output.contains("B"), "The Battleship should be represented by 'B'.");
+		assertTrue(output.contains("B"), "The Src.Battleship should be represented by 'B'.");
 		assertTrue(output.contains("C"), "The Cruiser should be represented by 'C'.");
 		assertTrue(output.contains("D"), "The Destroyer should be represented by 'D'.");
 	}
@@ -300,18 +306,18 @@ class GridTest {
 		when(mockShipB.isDirectionSet()).thenReturn(true);
 		when(mockShipB.getRow()).thenReturn(2);
 		when(mockShipB.getCol()).thenReturn(0);
-		when(mockShipB.getLength()).thenReturn(4); // Battleship
+		when(mockShipB.getLength()).thenReturn(4); // Src.Battleship
 		when(mockShipB.getDirection()).thenReturn(0); // Horizontal placement
 
 		// Place ships on the player's grid
 		player.chooseShipLocation(mockShipD, 0, 0, 0); // Destroyer
 		player.chooseShipLocation(mockShipC, 1, 0, 0); // Cruiser
-		player.chooseShipLocation(mockShipB, 2, 0, 0); // Battleship
+		player.chooseShipLocation(mockShipB, 2, 0, 0); // Src.Battleship
 
 		// Mark hits on some locations
 		player.playerGrid.markHit(0, 0); // Hit on the first cell of Destroyer
 		player.playerGrid.markHit(1, 1); // Hit on the second cell of Cruiser
-		player.playerGrid.markHit(2, 2); // Hit on the third cell of Battleship
+		player.playerGrid.markHit(2, 2); // Hit on the third cell of Src.Battleship
 
 		// Act: Capture the output of printCombined()
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -323,7 +329,7 @@ class GridTest {
 		// Assert: Verify that all symbols are displayed correctly
 		assertTrue(output.contains("D"), "The Destroyer should be represented by 'D'.");
 		assertTrue(output.contains("C"), "The Cruiser should be represented by 'C'.");
-		assertTrue(output.contains("B"), "The Battleship should be represented by 'B'.");
+		assertTrue(output.contains("B"), "The Src.Battleship should be represented by 'B'.");
 		assertTrue(output.contains("X"), "The hit locations should be represented by 'X'.");
 	}
 
@@ -357,7 +363,7 @@ class GridTest {
 	}
 
 	/*
-	 * Ensures the functionality of the constructor for the Grid class. Checks that the grid has been 
+	 * Ensures the functionality of the constructor for the Src.Grid class. Checks that the grid has been
 	initialized and that no ships have been added yet
 	*/
 	@Test
@@ -635,9 +641,9 @@ class GridTest {
 				() -> testGrid.addShip(mockShip),
 				"Expected an exception when direction is not set"
 		);
-		assertEquals("ERROR! Direction or Location is unset/default", exception1.getMessage());
+		assertEquals("ERROR! Direction or Src.Location is unset/default", exception1.getMessage());
 
-		// Scenario 2: Location is not set
+		// Scenario 2: Src.Location is not set
 		when(mockShip.isDirectionSet()).thenReturn(true);
 		when(mockShip.isLocationSet()).thenReturn(false);
 
@@ -646,7 +652,7 @@ class GridTest {
 				() -> testGrid.addShip(mockShip),
 				"Expected an exception when location is not set"
 		);
-		assertEquals("ERROR! Direction or Location is unset/default", exception2.getMessage());
+		assertEquals("ERROR! Direction or Src.Location is unset/default", exception2.getMessage());
 
 		// Scenario 3: Both are not set
 		when(mockShip.isDirectionSet()).thenReturn(false);
@@ -657,7 +663,7 @@ class GridTest {
 				() -> testGrid.addShip(mockShip),
 				"Expected an exception when both direction and location are not set"
 		);
-		assertEquals("ERROR! Direction or Location is unset/default", exception3.getMessage());
+		assertEquals("ERROR! Direction or Src.Location is unset/default", exception3.getMessage());
 	}
 
 

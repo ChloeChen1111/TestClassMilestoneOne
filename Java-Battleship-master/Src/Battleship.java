@@ -1,3 +1,5 @@
+package Src;
+
 import java.util.Scanner;
 
 public class Battleship
@@ -8,7 +10,7 @@ public class Battleship
     {
         System.out.println("JAVA BATTLESHIP - ** Yuval Marcus **");  
         
-        System.out.println("\nPlayer SETUP:");
+        System.out.println("\nSrc.Player SETUP:");
         Player userPlayer = new Player();
         setup(userPlayer);
         
@@ -135,7 +137,7 @@ public class Battleship
         {
             for (Ship s: p.ships)
             {
-                System.out.println("\nShip #" + counter + ": Length-" + s.getLength());
+                System.out.println("\nSrc.Ship #" + counter + ": Length-" + s.getLength());
                 int row = -1;
                 int col = -1;
                 int dir = -1;

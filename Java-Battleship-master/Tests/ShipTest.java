@@ -1,3 +1,6 @@
+package Tests;
+
+import Src.Ship;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 
@@ -79,16 +82,16 @@ class ShipTest {
 	@Test
 	void testToString() {
 		Ship testShip = new Ship(4);
-		assertEquals("Ship: -1, -1 with length 4 and direction UNSET", testShip.toString());
+		assertEquals("Src.Ship: -1, -1 with length 4 and direction UNSET", testShip.toString());
 
 		testShip.setLocation(5, 7);
-		assertEquals("Ship: 5, 7 with length 4 and direction UNSET", testShip.toString());
+		assertEquals("Src.Ship: 5, 7 with length 4 and direction UNSET", testShip.toString());
 
 		testShip.setDirection(Ship.HORIZONTAL);
-		assertEquals("Ship: 5, 7 with length 4 and direction HORIZONTAL", testShip.toString());
+		assertEquals("Src.Ship: 5, 7 with length 4 and direction HORIZONTAL", testShip.toString());
 
 		testShip.setDirection(Ship.VERTICAL);
-		assertEquals("Ship: 5, 7 with length 4 and direction VERTICAL", testShip.toString());
+		assertEquals("Src.Ship: 5, 7 with length 4 and direction VERTICAL", testShip.toString());
 	}
 
 	@Test
@@ -101,7 +104,7 @@ class ShipTest {
 	void testDirectionToStringVertical() {
 		Ship testShip = new Ship(4);
 		testShip.setDirection(Ship.VERTICAL);
-		assertEquals("Ship: -1, -1 with length 4 and direction VERTICAL", testShip.toString());
+		assertEquals("Src.Ship: -1, -1 with length 4 and direction VERTICAL", testShip.toString());
 	}
 
 }

@@ -1,3 +1,5 @@
+package Src;
+
 public class Grid
 {
     private Location[][] grid;
@@ -27,7 +29,7 @@ public class Grid
     }
     
     // Mark a hit in this location by calling the markHit method
-    // on the Location object.  
+    // on the Src.Location object.
     public void markHit(int row, int col)
     {
         grid[row][col].markHit();
@@ -52,7 +54,7 @@ public class Grid
         return grid[row][col].getStatus();
     }
     
-    // Return whether or not this Location has already been guessed.
+    // Return whether or not this Src.Location has already been guessed.
     public boolean alreadyGuessed(int row, int col)
     {
         return !grid[row][col].isUnguessed();
@@ -70,13 +72,13 @@ public class Grid
         return grid[row][col].hasShip();
     }
     
-    // Get the Location object at this row and column position
+    // Get the Src.Location object at this row and column position
     public Location get(int row, int col)
     {
         return grid[row][col];
     }
     
-    // Return the number of rows in the Grid
+    // Return the number of rows in the Src.Grid
     public int numRows()
     {
         return NUM_ROWS;
@@ -119,7 +121,7 @@ public class Grid
         int dir = s.getDirection();
         
         if (!(s.isDirectionSet()) || !(s.isLocationSet()))
-            throw new IllegalArgumentException("ERROR! Direction or Location is unset/default");
+            throw new IllegalArgumentException("ERROR! Direction or Src.Location is unset/default");
         
         // 0 - hor; 1 - ver
         if (dir == 0) // Hortizontal

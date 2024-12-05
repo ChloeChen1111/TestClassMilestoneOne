@@ -1,3 +1,5 @@
+package Mutants;
+
 public class ShipMutant
 {
     private int row;
@@ -63,9 +65,9 @@ public class ShipMutant
             return "VERTICAL";
     }
 
-    // toString value for this Ship
+    // toString value for this Src.Ship
     public String toString()
     {
-        return "Ship: " + getRow() + ", " + getCol() + " with length " + getLength() + " and direction " + directionToString();
+        return "Src.Ship: " + getRow() + ", " + getCol() + " with length " + getLength() + " and direction " + directionToString();
     }
 }
