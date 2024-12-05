@@ -45,7 +45,7 @@ if javac -d build Battleship.java Grid.java Location.java Player.java Randomizer
     # Compile the test classes with all dependencies in classpath
     echo "Building test classes..."
     if javac -cp "$CLASSPATH" -d build \
-        BattleshipTest.java GridTest.java LocationTest.java PlayerTest.java ShipTest.java; then
+        BattleshipTest.java GridTest.java LocationTest.java PlayerTest.java ShipTest.java RegressionTest.java; then
         BUILD_STATUS=true
         echo "Build successful"
     fi
